@@ -370,7 +370,7 @@ public class AppointmentScreenController implements Initializable {
     @FXML
     private void handleExit(ActionEvent event) throws IOException {
         
-        Parent mainParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/austinisakson/consultcalmaven/MainScreen.fxml"));
         Scene mainScene = new Scene(mainParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
