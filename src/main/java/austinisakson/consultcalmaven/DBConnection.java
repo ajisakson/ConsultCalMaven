@@ -6,10 +6,10 @@
 
 /* Database info:
 Connection String
-Server name:  52.206.157.109 
-Database name:  U05qn6
-Username:  U05qn6
-Password:  53688580422
+Server name:  45.79.52.109 
+Database name:  ConsultCal
+Username:  consultcal
+Password:  ccP@ssw0rd
 */
 
 package austinisakson.consultcalmaven;
@@ -24,10 +24,10 @@ import java.sql.SQLException;
  */
 public class DBConnection {
     
-    private static final String databaseName = "U05qn6";
-    private static final String DB_URL = "jdbc:mysql://52.206.157.109/" + databaseName;
-    private static final String username = "U05qn6";
-    private static final String password = "53688580422";
+    private static final String databaseName = "ConsultCal";
+    private static final String DB_URL = "jdbc:mysql://45.79.52.109/" + databaseName;
+    private static final String username = "consultcal";
+    private static final String password = "ccP@ssw0rd";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     
     static Connection conn;
