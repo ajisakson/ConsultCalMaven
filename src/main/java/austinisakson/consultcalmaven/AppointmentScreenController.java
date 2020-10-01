@@ -46,6 +46,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import static austinisakson.consultcalmaven.DBConnection.conn;
+import javafx.scene.control.Button;
 
 
 
@@ -57,39 +58,108 @@ import static austinisakson.consultcalmaven.DBConnection.conn;
 public class AppointmentScreenController implements Initializable {
 
     private int apptID;
+    
     @FXML
-    private ComboBox customerField;
+    Button homeButton = new Button();
     @FXML
-    private TextField titleField;
+    Button clientsButton = new Button();
     @FXML
-    private TextField descriptionField;
+    Button reportsButton = new Button();
+    @FXML     
+    Button addButton = new Button();
     @FXML
-    private TextField locationField;
+    Button viewButton = new Button();
     @FXML
-    private TextField contactField;
+    Button adminButton = new Button();
     @FXML
-    private TextField typeField;
+    Button logoutButton = new Button();
+                    
     @FXML
-    private TextField urlField;
+    private ComboBox searchType;
     @FXML
-    private DatePicker dateField;
+    private TextField searchField;
+    @FXML
+    Button searchButton = new Button();
+    
     @FXML
     private TextField startTimeField;
     @FXML
     private TextField endTimeField;
-    @FXML
-    private ObservableList<Customer> customers = FXCollections.observableArrayList();
+    
     @FXML
     private ObservableList<Appointment> data = FXCollections.observableArrayList();
     @FXML
-    private TableColumn<Appointment, String> column1 = new TableColumn<>("Title");
+    private TableColumn<Appointment, Calendar> column1 = new TableColumn<>("Date");
     @FXML
     private TableColumn<Appointment, Calendar> column2 = new TableColumn<>("Start Time");
     @FXML
-    private TableColumn<Appointment, String> column3 = new TableColumn<>("Location");
+    private TableColumn<Appointment, Calendar> column3 = new TableColumn<>("End Time");
+    @FXML
+    private TableColumn<Appointment, String> column4 = new TableColumn<>("Consultant");
+    @FXML
+    private TableColumn<Appointment, String> column5 = new TableColumn<>("Contact");
+    @FXML
+    private TableColumn<Appointment, String> column6 = new TableColumn<>("Location");
     @FXML
     private TableView appointmentView;
     
+    @FXML
+    private void handleMainScreen(ActionEvent event) throws IOException {
+        
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
+        Scene mainScene = new Scene(mainParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(mainScene);
+        window.show();
+    }
+    
+    @FXML
+    private void handleManageClients(ActionEvent event) throws IOException {
+        
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/ClientScreen.fxml"));
+        Scene mainScene = new Scene(mainParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(mainScene);
+        window.show();
+    }
+    
+    @FXML
+    private void handleReports(ActionEvent event) throws IOException {
+
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/ReportScreen.fxml"));
+        Scene mainScene = new Scene(mainParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(mainScene);
+        window.show();
+    }
+    
+    @FXML
+    private void handleAdminPanel(ActionEvent event) throws IOException {
+        
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
+        Scene mainScene = new Scene(mainParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(mainScene);
+        window.show();
+    }
+    
+    @FXML
+    private void handleLogout(ActionEvent event) throws IOException {
+        
+        LoginScreenController.currentUserId = 0;
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/LoginScreen.fxml"));
+        Scene mainScene = new Scene(mainParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(mainScene);
+        window.show();
+    }
+    
+    /*
     private static final String timeFromCal(GregorianCalendar cal){
         
         String time = "";
@@ -189,7 +259,7 @@ public class AppointmentScreenController implements Initializable {
             //update row for where apptid = sql id on appt table
             String query = "UPDATE appointment SET customerId = ?, title = ?, description = ?, location = ?, contact = ?, type = ?, url = ?, start = ?, end = ?, lastUpdate = NOW(), lastUpdateBy = ? WHERE appointmentid = ? ";
             PreparedStatement updateRow = conn.prepareStatement(query);
-            Customer selectedCust = (Customer) customerField.getValue();
+            Client selectedCust = (Client) customerField.getValue();
             updateRow.setInt(1, selectedCust.getID());
             updateRow.setString(2, titleField.getText());
             updateRow.setString(3, descriptionField.getText());
@@ -212,7 +282,7 @@ public class AppointmentScreenController implements Initializable {
             //insert row
             String query = "INSERT INTO appointment (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, NOW(), ?)";
             PreparedStatement insertRow = conn.prepareStatement(query);
-            Customer selectedCust = (Customer) customerField.getValue();
+            Client selectedCust = (Client) customerField.getValue();
             insertRow.setInt(1, selectedCust.getID());
             insertRow.setInt(2, LoginScreenController.currentUserId);
             insertRow.setString(3, titleField.getText());
@@ -291,9 +361,9 @@ public class AppointmentScreenController implements Initializable {
         // take selected value from tableview and populate the left side text fields with the info to be editable
         Appointment selectedAppointment = (Appointment) appointmentView.getSelectionModel().getSelectedItem();
         apptID = selectedAppointment.getAppointmentID();
-        for (Customer selectedCustomer : customers) {
-            if (selectedCustomer.getID() == selectedAppointment.getCustomerID()){
-                customerField.setValue(selectedCustomer);
+        for (Client selectedClient : clients) {
+            if (selectedClient.getID() == selectedAppointment.getCustomerID()){
+                customerField.setValue(selectedClient);
                 break;
             }
         }
@@ -367,17 +437,8 @@ public class AppointmentScreenController implements Initializable {
         appointmentView.setItems(data);
     }
     
-    @FXML
-    private void handleExit(ActionEvent event) throws IOException {
-        
-        Parent mainParent = FXMLLoader.load(getClass().getResource("/austinisakson/consultcalmaven/MainScreen.fxml"));
-        Scene mainScene = new Scene(mainParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(mainScene);
-        window.show();
-    }
     
+    */
     
     /**
      * Initializes the controller class.
@@ -386,13 +447,39 @@ public class AppointmentScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
        
+        clientsButton.setOnAction((event)->  { // lambda expression here is used to remove a separately declared function and cleanly insert it into the initial program, eliminating the need to call a separate function
+            try {
+                Parent mainParent = FXMLLoader.load(getClass().getResource("/austinisakson/consultcalmaven/CustomerScreen.fxml"));
+                Scene mainScene = new Scene(mainParent);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                
+                window.setScene(mainScene);
+                window.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        
         // populate tableview with appointment table
-        column2.setCellValueFactory(new PropertyValueFactory<Appointment, Calendar>("start"));
+        column1.setCellValueFactory(new PropertyValueFactory<>("date"));
+        column2.setCellValueFactory(new PropertyValueFactory<>("starttime"));
+        column3.setCellValueFactory(new PropertyValueFactory<>("endtime"));
         try {
             
             // populate appointment table
-            column1.setCellValueFactory(new PropertyValueFactory<>("title"));
             final DateFormat dateFormat = DateFormat.getInstance();
+            column1.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
+                @Override
+                public void updateItem(Calendar item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null) {
+                        setText(null);
+                    } else {
+                        setText(dateFormat.format(item.getTime()));
+                    }
+                }
+            });
             column2.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
                 @Override
                 public void updateItem(Calendar item, boolean empty) {
@@ -404,47 +491,62 @@ public class AppointmentScreenController implements Initializable {
                     }
                 }
             });
-            column3.setCellValueFactory(new PropertyValueFactory<>("location"));
+            column3.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
+                @Override
+                public void updateItem(Calendar item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null) {
+                        setText(null);
+                    } else {
+                        setText(dateFormat.format(item.getTime()));
+                    }
+                }
+            });
+            column4.setCellValueFactory(new PropertyValueFactory<>("consultant"));
+            column5.setCellValueFactory(new PropertyValueFactory<>("contact"));
+            column6.setCellValueFactory(new PropertyValueFactory<>("location"));
             
             // Query result set for Appointment Table, load each appointment as an object of the Appointment class, display as a TableView
             appointmentView.getItems().clear();
             int apptCount = 0;
             ResultSet appointmentTable = conn.createStatement().executeQuery("SELECT * FROM appointment");
             while (appointmentTable.next()){
+                
                 Appointment newAppointment = new Appointment();
                 newAppointment.setAppointmentID(appointmentTable.getInt("appointmentid"));
-                newAppointment.setCustomerID(appointmentTable.getInt("customerId"));
-                newAppointment.setUserID(appointmentTable.getInt("userID"));
-                newAppointment.setTitle(appointmentTable.getString("title"));
-                newAppointment.setDescription(appointmentTable.getString("description"));
+                newAppointment.setClientID(appointmentTable.getInt("client.Id"));
+                newAppointment.setSchedulerID(appointmentTable.getInt("user.ID"));
+                newAppointment.setDetails(appointmentTable.getString("details"));
                 newAppointment.setLocation(appointmentTable.getString("location"));
                 newAppointment.setContact(appointmentTable.getString("contact"));
-                newAppointment.setType(appointmentTable.getString("type"));
                 newAppointment.setURL(appointmentTable.getString("url"));
-                
-                Timestamp startStamp = appointmentTable.getTimestamp("start");
+
+                Timestamp startStamp = appointmentTable.getTimestamp("starttime");
                 GregorianCalendar startCal = (GregorianCalendar) GregorianCalendar.getInstance();
                 startCal.setTimeInMillis(startStamp.getTime());
                 newAppointment.setStart(startCal);
-                Timestamp endStamp = appointmentTable.getTimestamp("end");
+                Timestamp endStamp = appointmentTable.getTimestamp("endtime");
                 GregorianCalendar endCal = (GregorianCalendar) GregorianCalendar.getInstance();
                 endCal.setTimeInMillis(endStamp.getTime());
                 newAppointment.setEnd(endCal);
-                
+
                 newAppointment.setCreatedDate(appointmentTable.getDate("createDate"));
                 newAppointment.setCreatedBy(appointmentTable.getString("createdBy"));
                 newAppointment.setLastUpdate(appointmentTable.getTimestamp("lastUpdate"));
                 newAppointment.setLastUpdateBy(appointmentTable.getString("lastUpdateBy"));
                 data.add(newAppointment);
+                System.out.println("New appointment added from database!");
+                
                 apptCount++;
             }
             
             System.out.println(apptCount + " appointments added from the database.");
             appointmentView.setItems(data);
             
-            ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM customer");
+            /*
+            ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
             while (custTable.next()){
-                Customer newCustomer = new Customer();
+                Client newCustomer = new Client();
                 newCustomer.setID(custTable.getInt("customerid"));
                 newCustomer.setCustomer(custTable.getString("customerName"));
                 newCustomer.setAddressID(custTable.getInt("addressID"));
@@ -453,12 +555,13 @@ public class AppointmentScreenController implements Initializable {
                 newCustomer.setCreatedBy(custTable.getString("createdBy"));
                 newCustomer.setLastUpdate(custTable.getTimestamp("lastUpdate"));
                 newCustomer.setLastUpdateBy(custTable.getString("lastUpdateBy"));
-                customers.add(newCustomer);
+                clients.add(newCustomer);
             }
-            customerField.setItems(customers);
+            customerField.setItems(clients);
+            */
             
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
           
