@@ -17,13 +17,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -40,18 +38,7 @@ public class LoginScreenController implements Initializable {
     
     static String currentUser;
     static int currentUserId;
-    static boolean english = true;
     
-    @FXML
-    private Label userLabel;
-    @FXML
-    private Label passwordLabel;
-    @FXML
-    private Label locationLabel;
-    @FXML
-    private Button spanishEnglishSwitch;
-    @FXML
-    private Label locale;
     @FXML
     private TextField userNameInput;
     @FXML
@@ -65,7 +52,7 @@ public class LoginScreenController implements Initializable {
         ResultSet queryResult;
         String username = userNameInput.getText();
         String password = passwordInput.getText();
-        String query = "SELECT * FROM user WHERE userName=? AND password=?";
+        String query = "SELECT * FROM user WHERE email=? AND password=?";
         
         try {
             
@@ -101,23 +88,12 @@ public class LoginScreenController implements Initializable {
                     proceedToMainScreen(event);
             }
             else if (!queryResult.next()) {
-                if (english) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Login Error");
-                    alert.setHeaderText("Error logging in:");
-                    alert.setContentText("Username or password is incorrect.");
-                    alert.showAndWait();
-                    System.out.println("Incorrect username or password...");
-                    
-                }
-                else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error de Login");
-                    alert.setHeaderText("Hay un error de login:");
-                    alert.setContentText("Usuario o contraseña incorrecto.");
-                    alert.showAndWait();
-                    System.out.println("Usuario o contraseña incorrecto...");
-                }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login Error");
+                alert.setHeaderText("Error logging in:");
+                alert.setContentText("Username or password is incorrect.");
+                alert.showAndWait();
+                System.out.println("Incorrect username or password...");
             }
             
         }
@@ -127,32 +103,8 @@ public class LoginScreenController implements Initializable {
     }
     
     @FXML
-    private void handleLanguageSwitch(ActionEvent event) {
-        if (english == true) {
-            english = false;
-            userLabel.setText("Usuario");
-            passwordLabel.setText("Contraseña");
-            locationLabel.setText("Ubicacion");
-            spanishEnglishSwitch.setText("English");
-            userNameInput.setPromptText("Ingrese su usuario");
-            passwordInput.setPromptText("Ingrese su contraseña");
-            submitLoginForm.setText("Entrar");
-        }
-        else if (english == false) {
-            english = true;
-            userLabel.setText("User");
-            passwordLabel.setText("Password");
-            locationLabel.setText("Location");
-            spanishEnglishSwitch.setText("Español");
-            userNameInput.setPromptText("Please enter your username here");
-            passwordInput.setPromptText("Please enter your password here");
-            submitLoginForm.setText("Submit");
-        }
-    }
-    
-    @FXML
     private void proceedToMainScreen(ActionEvent event) throws IOException {
-        Parent mainParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
         Scene mainScene = new Scene(mainParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -164,19 +116,6 @@ public class LoginScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Locale currentLocale = Locale.getDefault();
-        if (currentLocale.getLanguage() == "es"){
-            english = false;
-            userLabel.setText("Usuario");
-            passwordLabel.setText("Contraseña");
-            locationLabel.setText("Ubicacion");
-            spanishEnglishSwitch.setText("English");
-            userNameInput.setPromptText("Ingrese su usuario");
-            passwordInput.setPromptText("Ingrese su contraseña");
-            submitLoginForm.setText("Entrar");
-        }
-        
-        locale.setText(currentLocale.getDisplayCountry());
         
     }    
     

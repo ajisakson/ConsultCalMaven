@@ -7,24 +7,13 @@ package austinisakson.consultcalmaven;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -36,9 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -519,7 +506,6 @@ public class AppointmentScreenController implements Initializable {
                 newAppointment.setDetails(appointmentTable.getString("details"));
                 newAppointment.setLocation(appointmentTable.getString("location"));
                 newAppointment.setContact(appointmentTable.getString("contact"));
-                newAppointment.setURL(appointmentTable.getString("url"));
 
                 Timestamp startStamp = appointmentTable.getTimestamp("starttime");
                 GregorianCalendar startCal = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -530,7 +516,7 @@ public class AppointmentScreenController implements Initializable {
                 endCal.setTimeInMillis(endStamp.getTime());
                 newAppointment.setEnd(endCal);
 
-                newAppointment.setCreatedDate(appointmentTable.getDate("createDate"));
+                newAppointment.setCreatedDate(appointmentTable.getTimestamp("createDate"));
                 newAppointment.setCreatedBy(appointmentTable.getString("createdBy"));
                 newAppointment.setLastUpdate(appointmentTable.getTimestamp("lastUpdate"));
                 newAppointment.setLastUpdateBy(appointmentTable.getString("lastUpdateBy"));

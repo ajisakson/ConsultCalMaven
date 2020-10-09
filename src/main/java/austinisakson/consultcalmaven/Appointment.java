@@ -16,17 +16,15 @@ import java.util.GregorianCalendar;
  */
 public class Appointment {
     private int appointmentID;
-    private int customerID;
-    private int userID;
-    private String title;
-    private String description;
+    private int clientID;
+    private int schedulerID;
+    private String details;
     private String location;
     private String contact;
-    private String type;
-    private String url;
+    private boolean completed;
     private GregorianCalendar start;
     private GregorianCalendar end;
-    private Date createdDate;
+    private Timestamp createdDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdateBy;
@@ -39,17 +37,14 @@ public class Appointment {
     public void setAppointmentID(int appointmentID){
         this.appointmentID = appointmentID;
     }
-    public void setCustomerID(int customerID){
-        this.customerID = customerID;
+    public void setClientID(int clientID){
+        this.clientID = clientID;
     }
-    public void setUserID(int userID){
-        this.userID = userID;
+    public void setSchedulerID(int schedulerID){
+        this.schedulerID = schedulerID;
     }
-    public void setTitle(String title){
-        this.title = title;
-    }
-    public void setDescription(String description){
-        this.description = description;
+    public void setDetails(String details){
+        this.details = details;
     }
     public void setLocation(String location){
         this.location = location;
@@ -57,19 +52,13 @@ public class Appointment {
     public void setContact(String contact){
         this.contact = contact;
     }
-    public void setType(String type){
-        this.type = type;
-    }
-    public void setURL(String url){
-        this.url = url;
-    }
     public void setStart(GregorianCalendar start){
         this.start = start;
     }
     public void setEnd(GregorianCalendar end){
         this.end = end;
     }
-    public void setCreatedDate(Date createdDate){
+    public void setCreatedDate(Timestamp createdDate){
         this.createdDate = createdDate;
     }
     public void setCreatedBy(String createdBy){
@@ -81,22 +70,22 @@ public class Appointment {
     public void setLastUpdateBy(String lastUpdateBy){
         this.lastUpdateBy = lastUpdateBy;
     }
+    public void setCompleted(boolean completed){
+        this.completed = completed;
+    }
     
     // getter methods
     public int getAppointmentID(){
         return appointmentID;
     }
-    public int getCustomerID(){
-        return customerID;
+    public int getClientID(){
+        return clientID;
     }
-    public int getUserID(){
-        return userID;
+    public int getSchedulerID(){
+        return schedulerID;
     }
-    public String getTitle(){
-        return title;
-    }
-    public String getDescription(){
-        return description;
+    public String getDetails(){
+        return details;
     }
     public String getLocation(){
         return location;
@@ -104,19 +93,13 @@ public class Appointment {
     public String getContact(){
         return contact;
     }
-    public String getType(){
-        return type;
-    }
-    public String getURL(){
-        return url;
-    }
     public GregorianCalendar getStart(){
         return start;
     }
     public GregorianCalendar getEnd(){
         return end;
     }
-    public Date getCreatedDate(){
+    public Timestamp getCreatedDate(){
         return createdDate;
     }
     public String CreatedBy(){
@@ -127,5 +110,8 @@ public class Appointment {
     }
     public String getLastUpdateBy(){
         return lastUpdateBy;
+    }
+    public Boolean getCompleted(){
+        return completed;
     }
 }

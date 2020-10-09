@@ -12,24 +12,32 @@ import java.sql.Timestamp;
  *
  * @author ajisa
  */
-public class Country {
-    private int countryID;
-    private String country;
+public class Client {
+    private int clientID;
+    private String clientName;
+    private int addressID;
+    private boolean active;
     private Date createdDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdateBy;
     
-    public Country(){
+    public Client(){
         
     }
     
     // setter methods
-    public void setID(int countryID){
-        this.countryID = countryID;
+    public void setID(int clientID){
+        this.clientID = clientID;
     }
-    public void setCountry(String country){
-       this.country = country; 
+    public void setClient(String clientName){
+       this.clientName = clientName; 
+    }
+    public void setAddressID(int addressID){
+        this.addressID = addressID;
+    }
+    public void setActive(boolean active){
+        this.active = active;
     }
     public void setCreatedDate(Date createdDate){
         this.createdDate = createdDate;
@@ -46,10 +54,16 @@ public class Country {
     
     // getter methods
     public int getID(){
-        return countryID;
+        return clientID;
     }
-    public String getCountry(){
-        return country;
+    public String getclientName(){
+        return clientName;
+    }
+    public int getAddressID(){
+        return addressID;
+    }
+    public boolean getActive(){
+        return active;
     }
     public Date getCreatedDate(){
         return createdDate;
@@ -62,6 +76,9 @@ public class Country {
     }
     public String getLastUpdateBy(){
         return lastUpdateBy;
+    }
+    public String toString(){
+        return clientName;
     }
     
     

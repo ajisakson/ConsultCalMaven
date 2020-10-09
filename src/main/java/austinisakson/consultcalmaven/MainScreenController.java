@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
-import static java.util.Calendar.MINUTE;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
@@ -30,7 +29,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
@@ -69,8 +67,6 @@ public class MainScreenController implements Initializable {
     
     @FXML
     private ObservableList<Appointment> data = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<Appointment> allUpcoming = FXCollections.observableArrayList();
     @FXML
     private TableColumn<Appointment, Calendar> column1 = new TableColumn<>("Start Time");
     @FXML

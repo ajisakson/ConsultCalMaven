@@ -39,18 +39,7 @@ public class User {
     public void setActive(boolean active){
         this.active = active;
     }
-    public void setCreatedDate(Date createdDate){
-        this.createdDate = createdDate;
-    }
-    public void setCreatedBy(String createdBy){
-        this.createdBy = createdBy;
-    }
-    public void setLastUpdate(Timestamp lastUpdate){
-        this.lastUpdate = lastUpdate;
-    }
-    public void setLastUpdateBy(String lastUpdateBy){
-        this.lastUpdateBy = lastUpdateBy;
-    }
+
     
     // getter methods
     public int getID(){

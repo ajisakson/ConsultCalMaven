@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.ApptDetailsController">
+   <children>
+      <Button fx:id="saveButton" layoutX="500.0" layoutY="361.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="exitButton" layoutX="551.0" layoutY="361.0" mnemonicParsing="false" text="Exit" />
+      <DatePicker fx:id="apptDate" layoutX="27.0" layoutY="56.0" promptText="Appointment Date" />
+      <ChoiceBox fx:id="startTime" layoutX="28.0" layoutY="111.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="endTime" layoutX="28.0" layoutY="170.0" prefWidth="150.0" />
+      <TextField fx:id="location" layoutX="28.0" layoutY="213.0" promptText="Location/URL" />
+      <ComboBox fx:id="client" layoutX="28.0" layoutY="251.0" prefWidth="150.0" promptText="Client" />
+      <TextArea fx:id="details" layoutX="288.0" layoutY="56.0" prefHeight="140.0" prefWidth="281.0" promptText="Details" />
+      <CheckBox fx:id="completed" layoutX="289.0" layoutY="255.0" mnemonicParsing="false" text="Completed" />
+      <TextField fx:id="contact" layoutX="288.0" layoutY="213.0" promptText="Contact" />
+      <Label fx:id="createdDateLabel" layoutX="29.0" layoutY="337.0" text="Created Date" />
+      <Label fx:id="createdByLabel" layoutX="29.0" layoutY="365.0" prefHeight="17.0" prefWidth="70.0" text="Created By" />
+      <Label fx:id="updatedByLabel" layoutX="289.0" layoutY="365.0" prefHeight="17.0" prefWidth="64.0" text="Updated By" />
+      <Label fx:id="lastUpdateLabel" layoutX="288.0" layoutY="337.0" text="Last Update" />
+      <Label layoutX="180.0" layoutY="14.0" text="Create, Edit, or View Appointment">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="153.0" text="End Time" />
+      <Label layoutX="29.0" layoutY="93.0" text="Start Time" />
+   </children>
+</AnchorPane>
