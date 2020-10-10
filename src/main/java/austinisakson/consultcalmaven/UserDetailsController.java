@@ -1,15 +1,14 @@
-package austinisakson.consultcalmaven;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package austinisakson.consultcalmaven;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -20,29 +19,29 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
  *
  * @author ajisa
  */
-public class ApptDetailsController implements Initializable {
+public class UserDetailsController implements Initializable {
+    
+       // Declare FXML Elements
 
-    // Declare FXML Elements
     @FXML
-    private DatePicker apptDate;
+    private TextField contactName;
     @FXML
-    private ChoiceBox startTime;
-    @FXML
-    private ChoiceBox endTime;
+    private TextField email;
     @FXML
     private TextField location;
     @FXML
-    private ComboBox client;
+    private TextField position;
     @FXML
-    private TextArea details;
+    private TextField newPassword;
     @FXML
-    private TextField contact;
+    private TextField passwordConfirm;
     @FXML
-    private CheckBox completed;
+    private CheckBox active;
+    @FXML
+    private CheckBox admin;
     
     @FXML
     Button saveButton = new Button();
@@ -62,13 +61,12 @@ public class ApptDetailsController implements Initializable {
     
     
     
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    } 
     
 }

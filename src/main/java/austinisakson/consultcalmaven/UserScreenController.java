@@ -9,6 +9,6 @@ package austinisakson.consultcalmaven;
  *
  * @author ajisa
  */
-public class UsersScreenController {
+public class UserScreenController {
     
 }

@@ -75,8 +75,6 @@ public class ClientScreenController implements Initializable {
     @FXML
     private ObservableList<Client> clients = FXCollections.observableArrayList();
     @FXML
-    private ObservableList<Location> addresses = FXCollections.observableArrayList();
-    @FXML
     private ObservableList<String> options = FXCollections.observableArrayList();
     @FXML
     private TableView clientView;

@@ -14,10 +14,13 @@ import java.sql.Timestamp;
  */
 public class User {
     private int userID;
-    private String userName;
+    private String email;
     private String password;
+    private String location;
     private boolean active;
-    private Date createdDate;
+    private boolean admin;
+    private String position;
+    private Timestamp createdDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdateBy;
@@ -30,8 +33,8 @@ public class User {
     public void setID(int userID){
         this.userID = userID;
     }
-    public void setUserName(String userName){
-       this.userName = userName; 
+    public void setEmail(String email){
+       this.email = email; 
     }
     public void setPassword(String password){
        this.password = password; 
@@ -39,14 +42,35 @@ public class User {
     public void setActive(boolean active){
         this.active = active;
     }
-
+    public void setAdmin(boolean admin){
+        this.admin = admin;
+    }
+    public void setPosition(String position){
+        this.position = position;
+    }
+    public void setLocation(String location){
+       this.location = location; 
+    }
+     public void setCreatedDate(Timestamp createdDate){
+        this.createdDate = createdDate;
+    }
+    public void setCreatedBy(String createdBy){
+        this.createdBy = createdBy;
+    }
+    public void setLastUpdate(Timestamp lastUpdate){
+        this.lastUpdate = lastUpdate;
+    }
+    public void setLastUpdateBy(String lastUpdateBy){
+        this.lastUpdateBy = lastUpdateBy;
+    }
+    
     
     // getter methods
     public int getID(){
         return userID;
     }
-    public String getUserName(){
-        return userName;
+    public String getEmail(){
+        return email;
     }
     public String getPassword(){
         return password;
@@ -54,7 +78,16 @@ public class User {
     public boolean getActive(){
         return active;
     }
-    public Date getCreatedDate(){
+    public boolean getAdmin(){
+        return admin;
+    }
+    public String getPosition(){
+        return position;
+    }
+    public String getLocation(){
+        return location;
+    }
+    public Timestamp getCreatedDate(){
         return createdDate;
     }
     public String getCreatedBy(){
