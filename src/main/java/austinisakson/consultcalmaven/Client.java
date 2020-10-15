@@ -15,7 +15,9 @@ import java.sql.Timestamp;
 public class Client {
     private int clientID;
     private String clientName;
-    private int addressID;
+    private String clientEmail;
+    private String clientPhone;
+    private String location;
     private boolean active;
     private Date createdDate;
     private String createdBy;
@@ -33,8 +35,14 @@ public class Client {
     public void setClient(String clientName){
        this.clientName = clientName; 
     }
-    public void setAddressID(int addressID){
-        this.addressID = addressID;
+    public void setEmail(String clientEmail){
+        this.clientEmail = clientEmail;
+    }
+    public void setPhone(String clientPhone){
+        this.clientPhone = clientPhone;
+    }
+    public void setLocation(String location){
+        this.location = location;
     }
     public void setActive(boolean active){
         this.active = active;
@@ -59,8 +67,14 @@ public class Client {
     public String getclientName(){
         return clientName;
     }
-    public int getAddressID(){
-        return addressID;
+    public String getEmail(){
+        return clientEmail;
+    }
+    public String getPhone(){
+        return clientPhone;
+    }
+    public String getLocation(){
+        return location;
     }
     public boolean getActive(){
         return active;

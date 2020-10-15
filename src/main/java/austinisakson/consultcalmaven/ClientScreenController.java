@@ -57,27 +57,13 @@ public class ClientScreenController implements Initializable {
     Button adminButton = new Button();
     @FXML
     Button logoutButton = new Button();
-    @FXML
-    Button searchButton = new Button();
     
     @FXML
-    private TextField nameField;
-    @FXML
-    private TextField addressField;
-    @FXML
-    private TextField address2Field;
-    @FXML
-    private ChoiceBox cityField;
-    @FXML
-    private TextField postalCodeField;
-    @FXML
-    private TextField phoneField;
+    Button searchButton = new Button();
+
+    
     @FXML
     private ObservableList<Client> clients = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<String> options = FXCollections.observableArrayList();
-    @FXML
-    private TableView clientView;
     @FXML
     private TableColumn<Client, String> column1 = new TableColumn<>("Contact Name");
     @FXML
@@ -86,8 +72,10 @@ public class ClientScreenController implements Initializable {
     private TableColumn<Client, String> column3 = new TableColumn<>("Phone");
     @FXML
     private TableColumn<Client, String> column4 = new TableColumn<>("Location");
-           
-   @FXML
+    @FXML
+    private TableView clientView;       
+    
+    @FXML
     private void handleMainScreen(ActionEvent event) throws IOException {
         
         Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
@@ -119,6 +107,22 @@ public class ClientScreenController implements Initializable {
         window.setScene(mainScene);
         window.show();
     }
+    
+    @FXML
+    private void handleClientDetails(ActionEvent event) throws IOException {
+        
+        Parent secondParent = FXMLLoader.load(getClass().getResource("/fxml/ClientDetails.fxml"));
+        Scene secondScene = new Scene(secondParent);
+        Stage window = new Stage();
+        
+        /* to hide window
+        (Stage) ((Node) event.getSource()).getScene().getWindow();
+        */
+
+        window.setScene(secondScene);
+        window.show();
+    }
+    
     
     @FXML
     private void handleAdminPanel(ActionEvent event) throws IOException {
@@ -490,14 +494,16 @@ public class ClientScreenController implements Initializable {
             ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
             while (custTable.next()){
                 Client newClient = new Client();
-                newClient.setID(custTable.getInt("clientID"));
-                newClient.setClient(custTable.getString("clientName"));
-                newClient.setAddressID(custTable.getInt("addressID"));
+                newClient.setID(custTable.getInt("ID"));
+                newClient.setClient(custTable.getString("contact_name"));
+                newClient.setEmail(custTable.getString("contact_email"));
+                newClient.setPhone(custTable.getString("contact_phone"));
+                newClient.setLocation(custTable.getString("location"));
                 newClient.setActive(custTable.getBoolean("active"));
-                newClient.setCreatedDate(custTable.getDate("createDate"));
-                newClient.setCreatedBy(custTable.getString("createdBy"));
-                newClient.setLastUpdate(custTable.getTimestamp("lastUpdate"));
-                newClient.setLastUpdateBy(custTable.getString("lastUpdateBy"));
+                newClient.setCreatedDate(custTable.getDate("create_time"));
+                newClient.setCreatedBy(custTable.getString("created_by"));
+                newClient.setLastUpdate(custTable.getTimestamp("last_update"));
+                newClient.setLastUpdateBy(custTable.getString("updated_by"));
                 clients.add(newClient);
                 clientCount++;
             }

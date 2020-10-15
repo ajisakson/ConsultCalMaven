@@ -44,7 +44,7 @@ import javafx.scene.control.Button;
  */
 public class AppointmentScreenController implements Initializable {
 
-    private int apptID;
+    private int apptID = 0;
     
     @FXML
     Button homeButton = new Button();
@@ -68,10 +68,6 @@ public class AppointmentScreenController implements Initializable {
     @FXML
     Button searchButton = new Button();
     
-    @FXML
-    private TextField startTimeField;
-    @FXML
-    private TextField endTimeField;
     
     @FXML
     private ObservableList<Appointment> data = FXCollections.observableArrayList();
@@ -123,6 +119,7 @@ public class AppointmentScreenController implements Initializable {
         window.show();
     }
     
+    
     @FXML
     private void handleAdminPanel(ActionEvent event) throws IOException {
         
@@ -145,6 +142,55 @@ public class AppointmentScreenController implements Initializable {
         window.setScene(mainScene);
         window.show();
     }
+    
+    public void handlePopulate() {
+        
+        // populate tableview with appointment table
+        try{
+            
+            // Query result set for Appointment Table, load each appointment as an object of the Appointment class, display as a TableView
+            appointmentView.getItems().clear();
+            int apptCount = 0;
+            ResultSet appointmentTable = conn.createStatement().executeQuery("SELECT * FROM appointment;");
+            while (appointmentTable.next()){
+                
+                Appointment newAppointment = new Appointment();
+                newAppointment.setAppointmentID(appointmentTable.getInt("id"));
+                newAppointment.setClientID(appointmentTable.getInt("client"));
+                newAppointment.setSchedulerID(appointmentTable.getInt("scheduler"));
+                newAppointment.setDetails(appointmentTable.getString("details"));
+                newAppointment.setLocation(appointmentTable.getString("location"));
+                newAppointment.setContact(appointmentTable.getString("contact"));
+
+                Timestamp startStamp = appointmentTable.getTimestamp("starttime");
+                GregorianCalendar startCal = (GregorianCalendar) GregorianCalendar.getInstance();
+                startCal.setTimeInMillis(startStamp.getTime());
+                newAppointment.setStart(startCal);
+                Timestamp endStamp = appointmentTable.getTimestamp("endtime");
+                GregorianCalendar endCal = (GregorianCalendar) GregorianCalendar.getInstance();
+                endCal.setTimeInMillis(endStamp.getTime());
+                newAppointment.setEnd(endCal);
+
+                newAppointment.setCreatedDate(appointmentTable.getTimestamp("createdDate"));
+                newAppointment.setCreatedBy(appointmentTable.getString("createdBy"));
+                newAppointment.setLastUpdate(appointmentTable.getTimestamp("lastUpdate"));
+                newAppointment.setLastUpdateBy(appointmentTable.getString("updatedBy"));
+                newAppointment.setCompleted(appointmentTable.getBoolean("completed"));
+                data.add(newAppointment);
+                System.out.println("New appointment added from database!");
+                
+                apptCount++;
+            }
+            
+            System.out.println(apptCount + " appointments added from the database.");
+            appointmentView.setItems(data);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     
     /*
     private static final String timeFromCal(GregorianCalendar cal){
@@ -447,108 +493,48 @@ public class AppointmentScreenController implements Initializable {
             }
         });
         
-        
-        // populate tableview with appointment table
+        final DateFormat dateFormat = DateFormat.getInstance();
         column1.setCellValueFactory(new PropertyValueFactory<>("date"));
+        column1.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
+            @Override
+            public void updateItem(Calendar item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setText(null);
+                } else {
+                    setText(dateFormat.format(item.getTime()));
+                }
+            }
+        });
         column2.setCellValueFactory(new PropertyValueFactory<>("starttime"));
+        column2.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
+            @Override
+            public void updateItem(Calendar item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setText(null);
+                } else {
+                    setText(dateFormat.format(item.getTime()));
+                }
+            }
+        });
         column3.setCellValueFactory(new PropertyValueFactory<>("endtime"));
-        try {
-            
-            // populate appointment table
-            final DateFormat dateFormat = DateFormat.getInstance();
-            column1.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
-                @Override
-                public void updateItem(Calendar item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null) {
-                        setText(null);
-                    } else {
-                        setText(dateFormat.format(item.getTime()));
-                    }
+        column3.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
+            @Override
+            public void updateItem(Calendar item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setText(null);
+                } else {
+                    setText(dateFormat.format(item.getTime()));
                 }
-            });
-            column2.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
-                @Override
-                public void updateItem(Calendar item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null) {
-                        setText(null);
-                    } else {
-                        setText(dateFormat.format(item.getTime()));
-                    }
-                }
-            });
-            column3.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
-                @Override
-                public void updateItem(Calendar item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null) {
-                        setText(null);
-                    } else {
-                        setText(dateFormat.format(item.getTime()));
-                    }
-                }
-            });
-            column4.setCellValueFactory(new PropertyValueFactory<>("consultant"));
-            column5.setCellValueFactory(new PropertyValueFactory<>("contact"));
-            column6.setCellValueFactory(new PropertyValueFactory<>("location"));
-            
-            // Query result set for Appointment Table, load each appointment as an object of the Appointment class, display as a TableView
-            appointmentView.getItems().clear();
-            int apptCount = 0;
-            ResultSet appointmentTable = conn.createStatement().executeQuery("SELECT * FROM appointment");
-            while (appointmentTable.next()){
-                
-                Appointment newAppointment = new Appointment();
-                newAppointment.setAppointmentID(appointmentTable.getInt("appointmentid"));
-                newAppointment.setClientID(appointmentTable.getInt("client.Id"));
-                newAppointment.setSchedulerID(appointmentTable.getInt("user.ID"));
-                newAppointment.setDetails(appointmentTable.getString("details"));
-                newAppointment.setLocation(appointmentTable.getString("location"));
-                newAppointment.setContact(appointmentTable.getString("contact"));
-
-                Timestamp startStamp = appointmentTable.getTimestamp("starttime");
-                GregorianCalendar startCal = (GregorianCalendar) GregorianCalendar.getInstance();
-                startCal.setTimeInMillis(startStamp.getTime());
-                newAppointment.setStart(startCal);
-                Timestamp endStamp = appointmentTable.getTimestamp("endtime");
-                GregorianCalendar endCal = (GregorianCalendar) GregorianCalendar.getInstance();
-                endCal.setTimeInMillis(endStamp.getTime());
-                newAppointment.setEnd(endCal);
-
-                newAppointment.setCreatedDate(appointmentTable.getTimestamp("createDate"));
-                newAppointment.setCreatedBy(appointmentTable.getString("createdBy"));
-                newAppointment.setLastUpdate(appointmentTable.getTimestamp("lastUpdate"));
-                newAppointment.setLastUpdateBy(appointmentTable.getString("lastUpdateBy"));
-                data.add(newAppointment);
-                System.out.println("New appointment added from database!");
-                
-                apptCount++;
             }
-            
-            System.out.println(apptCount + " appointments added from the database.");
-            appointmentView.setItems(data);
-            
-            /*
-            ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
-            while (custTable.next()){
-                Client newCustomer = new Client();
-                newCustomer.setID(custTable.getInt("customerid"));
-                newCustomer.setCustomer(custTable.getString("customerName"));
-                newCustomer.setAddressID(custTable.getInt("addressID"));
-                newCustomer.setActive(custTable.getBoolean("active"));
-                newCustomer.setCreatedDate(custTable.getDate("createDate"));
-                newCustomer.setCreatedBy(custTable.getString("createdBy"));
-                newCustomer.setLastUpdate(custTable.getTimestamp("lastUpdate"));
-                newCustomer.setLastUpdateBy(custTable.getString("lastUpdateBy"));
-                clients.add(newCustomer);
-            }
-            customerField.setItems(clients);
-            */
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ClientScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        });
+        column4.setCellValueFactory(new PropertyValueFactory<>("consultant"));
+        column5.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        column6.setCellValueFactory(new PropertyValueFactory<>("location"));
+        
+        this.handlePopulate();
     }
           
     

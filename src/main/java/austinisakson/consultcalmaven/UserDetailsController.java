@@ -15,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -35,9 +36,9 @@ public class UserDetailsController implements Initializable {
     @FXML
     private TextField position;
     @FXML
-    private TextField newPassword;
+    private PasswordField newPassword;
     @FXML
-    private TextField passwordConfirm;
+    private PasswordField passwordConfirm;
     @FXML
     private CheckBox active;
     @FXML
