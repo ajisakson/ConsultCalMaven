@@ -17,11 +17,12 @@ import java.util.GregorianCalendar;
 public class Appointment {
     private int appointmentID;
     private int clientID;
-    private int schedulerID;
+    private int scheduler;
     private String details;
     private String location;
     private String contact;
     private boolean completed;
+    private GregorianCalendar date;
     private GregorianCalendar start;
     private GregorianCalendar end;
     private Timestamp createdDate;
@@ -40,8 +41,8 @@ public class Appointment {
     public void setClientID(int clientID){
         this.clientID = clientID;
     }
-    public void setSchedulerID(int schedulerID){
-        this.schedulerID = schedulerID;
+    public void setScheduler(int scheduler){
+        this.scheduler = scheduler;
     }
     public void setDetails(String details){
         this.details = details;
@@ -51,6 +52,9 @@ public class Appointment {
     }
     public void setContact(String contact){
         this.contact = contact;
+    }
+    public void setDate(GregorianCalendar date){
+        this.date = date;
     }
     public void setStart(GregorianCalendar start){
         this.start = start;
@@ -81,8 +85,8 @@ public class Appointment {
     public int getClientID(){
         return clientID;
     }
-    public int getSchedulerID(){
-        return schedulerID;
+    public int getScheduler(){
+        return scheduler;
     }
     public String getDetails(){
         return details;
@@ -92,6 +96,9 @@ public class Appointment {
     }
     public String getContact(){
         return contact;
+    }
+    public GregorianCalendar getDate(){
+        return date;
     }
     public GregorianCalendar getStart(){
         return start;

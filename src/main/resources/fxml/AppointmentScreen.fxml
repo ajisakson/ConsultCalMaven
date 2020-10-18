@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.MainScreenController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.AppointmentScreenController">
    <children>
       <Label layoutX="35.0" layoutY="28.0" text="ConsultCal">
          <font>
@@ -38,7 +38,7 @@
          </font>
       </Label>
       <TextField fx:id="searchField" layoutX="518.0" layoutY="25.0" prefHeight="25.0" prefWidth="196.0" />
-      <Button fx:id="addButton" layoutX="32.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleApptDetails" prefHeight="25.0" prefWidth="92.0" text="Add" />
+      <Button fx:id="addButton" layoutX="31.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleApptDetails" prefHeight="25.0" prefWidth="92.0" text="Add" />
       <Button fx:id="viewButton" layoutX="31.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleApptDetails" prefHeight="25.0" prefWidth="92.0" text="View" />
       <ChoiceBox fx:id="searchType" layoutX="353.0" layoutY="25.0" prefWidth="150.0" />
    </children>

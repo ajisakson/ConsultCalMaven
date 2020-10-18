@@ -73,7 +73,7 @@ public class ClientScreenController implements Initializable {
     @FXML
     private TableColumn<Client, String> column4 = new TableColumn<>("Location");
     @FXML
-    private TableView clientView;       
+    private TableView clientView = new TableView();       
     
     @FXML
     private void handleMainScreen(ActionEvent event) throws IOException {
@@ -109,9 +109,37 @@ public class ClientScreenController implements Initializable {
     }
     
     @FXML
-    private void handleClientDetails(ActionEvent event) throws IOException {
+    private void handleClientAdd(ActionEvent event) throws IOException {
         
-        Parent secondParent = FXMLLoader.load(getClass().getResource("/fxml/ClientDetails.fxml"));
+        Client selectedClient = new Client();
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientDetails.fxml"));
+        Parent secondParent = loader.load();
+        
+        Scene secondScene = new Scene(secondParent);
+        Stage window = new Stage();
+        
+        ClientDetailsController controller = loader.getController();
+        
+        /* to hide window
+        (Stage) ((Node) event.getSource()).getScene().getWindow();
+        */
+
+        window.setScene(secondScene);
+        window.show();
+    }
+    
+    @FXML
+    private void handleClientView(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientDetails.fxml"));
+        Parent secondParent = loader.load();
+        
+        Client selectedClient = (Client) clientView.getSelectionModel().getSelectedItem();
+               
+        ClientDetailsController controller = loader.getController();
+        controller.transferClient(selectedClient);
+         
         Scene secondScene = new Scene(secondParent);
         Stage window = new Stage();
         
@@ -121,6 +149,7 @@ public class ClientScreenController implements Initializable {
 
         window.setScene(secondScene);
         window.show();
+
     }
     
     
@@ -417,87 +446,27 @@ public class ClientScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        column1.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        column2.setCellValueFactory(new PropertyValueFactory<>("contactEmail"));
+        column3.setCellValueFactory(new PropertyValueFactory<>("contactPhone"));
+        column4.setCellValueFactory(new PropertyValueFactory<>("location"));
+        
+        // populate Client table
+        
         try {
-            /*
-            // Query result set for Address Table, load each address as an object of the Address class
-            int addressCount = 0;
-            ResultSet addressSet = conn.createStatement().executeQuery("SELECT * FROM address");
-            while (addressSet.next()){
-                Location newAddress = new Location();
-                newAddress.setID(addressSet.getInt("addressid"));
-                newAddress.setAddress(addressSet.getString("address"));
-                newAddress.setAddress2(addressSet.getString("address2"));
-                newAddress.setCityID(addressSet.getInt("cityId"));
-                newAddress.setPostalCode(addressSet.getString("postalCode"));
-                newAddress.setPhone(addressSet.getString("phone"));
-                newAddress.setCreatedDate(addressSet.getDate("createDate"));
-                newAddress.setCreatedBy(addressSet.getString("createdBy"));
-                newAddress.setLastUpdate(addressSet.getTimestamp("lastUpdate"));
-                newAddress.setLastUpdateBy(addressSet.getString("lastUpdateBy"));
-                addresses.add(newAddress);
-                addressCount++;
-            }
-            System.out.println(addressCount + " addresses added from the database.");
-            */
-            
-            
-            /*
-            // Query result set for City Table, load each city as an object of the City class
-            int cityCount = 0;
-            ResultSet citySet = conn.createStatement().executeQuery("SELECT * FROM city");            
-            while (citySet.next()){
-                City newCity = new City();
-                newCity.setID(citySet.getInt("cityid"));
-                newCity.setCity(citySet.getString("city"));
-                newCity.setCountryID(citySet.getInt("countryId"));
-                newCity.setCreatedDate(citySet.getDate("createDate"));
-                newCity.setCreatedBy(citySet.getString("createdBy"));
-                newCity.setLastUpdate(citySet.getTimestamp("lastUpdate"));
-                newCity.setLastUpdateBy(citySet.getString("lastUpdateBy"));
-                cityCount++;
-            }
-            System.out.println(cityCount + " cities added from the database.");
-            
-            int countryCount = 0;
-            ResultSet countrySet = conn.createStatement().executeQuery("SELECT * FROM country");            
-            while (countrySet.next()){
-                Country newCountry = new Country();
-                newCountry.setID(countrySet.getInt("countryid"));
-                newCountry.setCountry(countrySet.getString("country"));
-                newCountry.setCreatedDate(countrySet.getDate("createDate"));
-                newCountry.setCreatedBy(countrySet.getString("createdBy"));
-                newCountry.setLastUpdate(countrySet.getTimestamp("lastUpdate"));
-                newCountry.setLastUpdateBy(countrySet.getString("lastUpdateBy"));
-                countryCount++;
-            }
-            System.out.println(countryCount + " countries added from the database.");
-            */
-            
-            
-            /*
-            options.add("Pheonix");
-            options.add("New York");
-            options.add("London");
-            cityField.setItems(options);
-            */
-            
-            // populate Client table
-            column1.setCellValueFactory(new PropertyValueFactory<>("contact_name"));
-            column2.setCellValueFactory(new PropertyValueFactory<>("contact_email"));
-            column3.setCellValueFactory(new PropertyValueFactory<>("contact_phone"));
-            column4.setCellValueFactory(new PropertyValueFactory<>("location"));
             
             // Query result set for client Table, load each client as an object of the client class, display as a TableView
             clientView.getItems().clear();
-            
             int clientCount = 0;
             ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
             while (custTable.next()){
+                
                 Client newClient = new Client();
-                newClient.setID(custTable.getInt("ID"));
-                newClient.setClient(custTable.getString("contact_name"));
-                newClient.setEmail(custTable.getString("contact_email"));
-                newClient.setPhone(custTable.getString("contact_phone"));
+                newClient.setID(custTable.getInt("id"));
+                newClient.setContactName(custTable.getString("contact_name"));
+                newClient.setContactEmail(custTable.getString("contact_email"));
+                newClient.setContactPhone(custTable.getString("contact_phone"));
                 newClient.setLocation(custTable.getString("location"));
                 newClient.setActive(custTable.getBoolean("active"));
                 newClient.setCreatedDate(custTable.getDate("create_time"));

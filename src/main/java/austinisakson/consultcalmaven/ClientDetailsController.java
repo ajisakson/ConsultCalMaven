@@ -5,14 +5,20 @@
  */
 package austinisakson.consultcalmaven;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  *
@@ -49,6 +55,27 @@ public class ClientDetailsController implements Initializable {
     @FXML
     Label updatedByLabel = new Label();
     
+    @FXML
+    private Client selectedClient;
+    
+    public void transferClient(Client selectedClient){
+        this.selectedClient = selectedClient;
+        contactName.setText(selectedClient.getContactName());
+        email.setText(selectedClient.getContactEmail());
+        phone.setText(selectedClient.getContactPhone());
+        location.setText(selectedClient.getLocation());
+        active.setSelected(selectedClient.getActive());
+        createdDateLabel.setText("Created Date: " + selectedClient.getCreatedDate());
+        createdByLabel.setText("Created By: " + selectedClient.getCreatedBy());
+        lastUpdateLabel.setText("Last Updated: " + selectedClient.getLastUpdate());
+        updatedByLabel.setText("Updated By: " + selectedClient.getLastUpdateBy());
+    }
+    
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
     
     
     /**
@@ -57,6 +84,8 @@ public class ClientDetailsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
+
     } 
     
 }

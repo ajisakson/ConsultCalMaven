@@ -14,7 +14,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.ApptDetailsController">
    <children>
       <Button fx:id="saveButton" layoutX="414.0" layoutY="355.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Save" />
-      <Button fx:id="cancelButton" layoutX="414.0" layoutY="322.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Cancel" />
+      <Button fx:id="handleCancel" layoutX="414.0" layoutY="322.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Cancel" />
       <DatePicker fx:id="apptDate" layoutX="27.0" layoutY="56.0" promptText="Appointment Date" />
       <ChoiceBox fx:id="startTime" layoutX="28.0" layoutY="111.0" prefWidth="150.0" />
       <ChoiceBox fx:id="endTime" layoutX="28.0" layoutY="170.0" prefWidth="150.0" />

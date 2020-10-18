@@ -14,9 +14,9 @@ import java.sql.Timestamp;
  */
 public class Client {
     private int clientID;
-    private String clientName;
-    private String clientEmail;
-    private String clientPhone;
+    private String contactName;
+    private String contactEmail;
+    private String contactPhone;
     private String location;
     private boolean active;
     private Date createdDate;
@@ -32,14 +32,14 @@ public class Client {
     public void setID(int clientID){
         this.clientID = clientID;
     }
-    public void setClient(String clientName){
-       this.clientName = clientName; 
+    public void setContactName(String contactName){
+       this.contactName = contactName; 
     }
-    public void setEmail(String clientEmail){
-        this.clientEmail = clientEmail;
+    public void setContactEmail(String contactEmail){
+        this.contactEmail = contactEmail;
     }
-    public void setPhone(String clientPhone){
-        this.clientPhone = clientPhone;
+    public void setContactPhone(String contactPhone){
+        this.contactPhone = contactPhone;
     }
     public void setLocation(String location){
         this.location = location;
@@ -64,14 +64,14 @@ public class Client {
     public int getID(){
         return clientID;
     }
-    public String getclientName(){
-        return clientName;
+    public String getContactName(){
+        return contactName;
     }
-    public String getEmail(){
-        return clientEmail;
+    public String getContactEmail(){
+        return contactEmail;
     }
-    public String getPhone(){
-        return clientPhone;
+    public String getContactPhone(){
+        return contactPhone;
     }
     public String getLocation(){
         return location;
@@ -92,7 +92,7 @@ public class Client {
         return lastUpdateBy;
     }
     public String toString(){
-        return clientName;
+        return contactName;
     }
     
     

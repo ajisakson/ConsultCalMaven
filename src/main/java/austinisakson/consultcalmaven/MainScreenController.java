@@ -115,20 +115,6 @@ public class MainScreenController implements Initializable {
         window.show();
     }
     
-    @FXML
-    private void handleApptDetails(ActionEvent event) throws IOException {
-        
-        Parent secondParent = FXMLLoader.load(getClass().getResource("/fxml/ApptDetails.fxml"));
-        Scene secondScene = new Scene(secondParent);
-        Stage window = new Stage();
-        
-        /* to hide window
-        (Stage) ((Node) event.getSource()).getScene().getWindow();
-        */
-        
-        window.setScene(secondScene);
-        window.show();
-    }
     
     @FXML
     private void handleManageClients(ActionEvent event) throws IOException {
@@ -141,20 +127,6 @@ public class MainScreenController implements Initializable {
         window.show();
     }
     
-    @FXML
-    private void handleClientDetails(ActionEvent event) throws IOException {
-        
-        Parent secondParent = FXMLLoader.load(getClass().getResource("/fxml/ClientDetails.fxml"));
-        Scene secondScene = new Scene(secondParent);
-        Stage window = new Stage();
-        
-        /* to hide window
-        (Stage) ((Node) event.getSource()).getScene().getWindow();
-        */
-
-        window.setScene(secondScene);
-        window.show();
-    }
     
     @FXML
     private void handleReports(ActionEvent event) throws IOException {
@@ -203,7 +175,7 @@ public class MainScreenController implements Initializable {
                     Appointment newAppointment = new Appointment();
                     newAppointment.setAppointmentID(appointmentTable.getInt("id"));
                     newAppointment.setClientID(appointmentTable.getInt("client"));
-                    newAppointment.setSchedulerID(appointmentTable.getInt("scheduler"));
+                    newAppointment.setScheduler(appointmentTable.getInt("scheduler"));
                     newAppointment.setDetails(appointmentTable.getString("details"));
                     newAppointment.setLocation(appointmentTable.getString("location"));
                     newAppointment.setContact(appointmentTable.getString("contact"));
@@ -244,7 +216,7 @@ public class MainScreenController implements Initializable {
                     Appointment newAppointment = new Appointment();
                     newAppointment.setAppointmentID(appointmentTable.getInt("id"));
                     newAppointment.setClientID(appointmentTable.getInt("client"));
-                    newAppointment.setSchedulerID(appointmentTable.getInt("scheduler"));
+                    newAppointment.setScheduler(appointmentTable.getInt("scheduler"));
                     newAppointment.setDetails(appointmentTable.getString("details"));
                     newAppointment.setLocation(appointmentTable.getString("location"));
                     newAppointment.setContact(appointmentTable.getString("contact"));

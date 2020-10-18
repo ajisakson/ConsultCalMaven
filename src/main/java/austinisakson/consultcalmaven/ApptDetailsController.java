@@ -6,12 +6,14 @@ package austinisakson.consultcalmaven;
  * and open the template in the editor.
  */
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,6 +24,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -76,6 +79,11 @@ public class ApptDetailsController implements Initializable {
     @FXML
     Label updatedByLabel = new Label();
 
+    @FXML
+    private void handleCancel(ActionEvent event) throws IOException {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
     
     /**
      * Initializes the controller class.
