@@ -7,24 +7,28 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="278.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.ClientDetailsController">
+<AnchorPane id="AnchorPane" prefHeight="307.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.ClientDetailsController">
    <children>
-      <Button fx:id="saveButton" layoutX="263.0" layoutY="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Save" />
-      <Button fx:id="deleteButton" layoutX="263.0" layoutY="171.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Delete" />
-      <TextField fx:id="email" layoutX="20.0" layoutY="89.0" promptText="Email" />
-      <CheckBox fx:id="active" layoutX="20.0" layoutY="131.0" mnemonicParsing="false" text="Active" />
-      <TextField fx:id="contactName" layoutX="20.0" layoutY="54.0" promptText="Contact Name" />
-      <Label fx:id="createdDateLabel" layoutX="20.0" layoutY="166.0" prefHeight="17.0" prefWidth="222.0" text="Created Date: " />
-      <Label fx:id="createdByLabel" layoutX="20.0" layoutY="192.0" prefHeight="17.0" prefWidth="222.0" text="Created By: " />
-      <Label fx:id="updatedByLabel" layoutX="20.0" layoutY="243.0" prefHeight="17.0" prefWidth="222.0" text="Updated By:" />
-      <Label fx:id="lastUpdateLabel" layoutX="20.0" layoutY="217.0" prefHeight="17.0" prefWidth="222.0" text="Last Updated: " />
-      <Label layoutX="92.0" layoutY="14.0" text="Create, Edit, or View Client">
+      <Button fx:id="saveButton" layoutX="272.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="93.0" text="Save" />
+      <Button fx:id="deleteButton" layoutX="272.0" layoutY="198.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="93.0" text="Delete" />
+      <TextField fx:id="email" layoutX="20.0" layoutY="129.0" promptText="Email" />
+      <CheckBox fx:id="active" layoutX="270.0" layoutY="163.0" mnemonicParsing="false" text="Active" />
+      <TextField fx:id="contactName" layoutX="20.0" layoutY="72.0" promptText="Contact Name" />
+      <Label fx:id="createdDateLabel" layoutX="20.0" layoutY="188.0" prefHeight="17.0" prefWidth="222.0" text="Created Date: " />
+      <Label fx:id="createdByLabel" layoutX="20.0" layoutY="214.0" prefHeight="17.0" prefWidth="222.0" text="Created By: " />
+      <Label fx:id="updatedByLabel" layoutX="20.0" layoutY="270.0" prefHeight="17.0" prefWidth="222.0" text="Updated By:" />
+      <Label fx:id="lastUpdateLabel" layoutX="20.0" layoutY="244.0" prefHeight="17.0" prefWidth="222.0" text="Last Updated: " />
+      <Label fx:id="screenTitle" layoutX="98.0" layoutY="14.0" text="Create, Edit, or View Client">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="phone" layoutX="207.0" layoutY="54.0" promptText="Phone Number" />
-      <TextField fx:id="location" layoutX="207.0" layoutY="89.0" promptText="Location" />
-      <Button fx:id="cancelButton" layoutX="263.0" layoutY="205.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="93.0" text="Cancel" />
+      <TextField fx:id="phone" layoutX="216.0" layoutY="71.0" promptText="Phone Number" />
+      <TextField fx:id="location" layoutX="216.0" layoutY="128.0" promptText="Location" />
+      <Button fx:id="cancelButton" layoutX="272.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="93.0" text="Cancel" />
+      <Label layoutX="20.0" layoutY="47.0" text="Name" />
+      <Label layoutX="216.0" layoutY="104.0" text="Location" />
+      <Label layoutX="216.0" layoutY="46.0" text="Phone Number" />
+      <Label layoutX="20.0" layoutY="105.0" text="Email Address" />
    </children>
 </AnchorPane>

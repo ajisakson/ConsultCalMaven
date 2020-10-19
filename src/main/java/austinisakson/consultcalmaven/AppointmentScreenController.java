@@ -146,7 +146,7 @@ public class AppointmentScreenController implements Initializable {
     }
     
     @FXML
-    private void handleApptDetails(ActionEvent event) throws IOException {
+    private void handleApptAdd(ActionEvent event) throws IOException {
         
         Parent secondParent = FXMLLoader.load(getClass().getResource("/fxml/ApptDetails.fxml"));
         Scene secondScene = new Scene(secondParent);
@@ -158,6 +158,29 @@ public class AppointmentScreenController implements Initializable {
         
         window.setScene(secondScene);
         window.show();
+    }
+    
+    @FXML
+    private void handleApptView(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ApptDetails.fxml"));
+        Parent secondParent = loader.load();
+        
+        Appointment selectedAppt = (Appointment) appointmentView.getSelectionModel().getSelectedItem();
+               
+        ApptDetailsController controller = loader.getController();
+        controller.transferAppt(selectedAppt);
+         
+        Scene secondScene = new Scene(secondParent);
+        Stage window = new Stage();
+        
+        /* to hide window
+        (Stage) ((Node) event.getSource()).getScene().getWindow();
+        */
+
+        window.setScene(secondScene);
+        window.show();
+
     }
     
     
@@ -448,24 +471,10 @@ public class AppointmentScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       
-        /* 
-        clientsButton.setOnAction((event)->  { // lambda expression here is used to remove a separately declared function and cleanly insert it into the initial program, eliminating the need to call a separate function
-            try {
-                Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/ClientScreen.fxml"));
-                Scene mainScene = new Scene(mainParent);
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                
-                window.setScene(mainScene);
-                window.show();
-            } catch (IOException ex) {
-                Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        */
         
         SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat timeOnly = new SimpleDateFormat("HH:mm");
+        
         column1.setCellValueFactory(new PropertyValueFactory<>("start"));
         column1.setCellFactory(col -> new TableCell<Appointment, Calendar>(){ // this lambda expression allows the anonymous function "updateItem" to insert its content as the parameter for the setCellFactory method
             @Override

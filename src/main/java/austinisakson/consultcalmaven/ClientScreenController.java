@@ -32,7 +32,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import static austinisakson.consultcalmaven.DBConnection.conn;
+import java.util.Optional;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 
 /**
  * FXML Controller class
@@ -121,6 +123,9 @@ public class ClientScreenController implements Initializable {
         
         ClientDetailsController controller = loader.getController();
         
+        controller.screenTitle.setText("Add Client");
+        controller.deleteButton.setDisable(true);
+        
         /* to hide window
         (Stage) ((Node) event.getSource()).getScene().getWindow();
         */
@@ -132,24 +137,34 @@ public class ClientScreenController implements Initializable {
     @FXML
     private void handleClientView(ActionEvent event) throws IOException {
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientDetails.fxml"));
-        Parent secondParent = loader.load();
-        
-        Client selectedClient = (Client) clientView.getSelectionModel().getSelectedItem();
-               
-        ClientDetailsController controller = loader.getController();
-        controller.transferClient(selectedClient);
-         
-        Scene secondScene = new Scene(secondParent);
-        Stage window = new Stage();
-        
-        /* to hide window
-        (Stage) ((Node) event.getSource()).getScene().getWindow();
-        */
+        if (clientView.getSelectionModel().getSelectedItem() != null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientDetails.fxml"));
+            Parent secondParent = loader.load();
 
-        window.setScene(secondScene);
-        window.show();
+            Client selectedClient = (Client) clientView.getSelectionModel().getSelectedItem();
 
+            ClientDetailsController controller = loader.getController();
+            controller.transferClient(selectedClient);
+            controller.screenTitle.setText("Update or View Client");
+
+            Scene secondScene = new Scene(secondParent);
+            Stage window = new Stage();
+
+            /* to hide window
+            (Stage) ((Node) event.getSource()).getScene().getWindow();
+            */
+
+            window.setScene(secondScene);
+            window.show();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No Client Selected");
+            alert.setHeaderText("Please select a client from the table.");
+            alert.setContentText("Please select a client from the table prior to clicking the View button. To add a new client please click the Add button.");
+            alert.showAndWait();
+        }
+        
     }
     
     

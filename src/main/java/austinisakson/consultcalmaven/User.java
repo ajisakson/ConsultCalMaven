@@ -14,6 +14,7 @@ import java.sql.Timestamp;
  */
 public class User {
     private int userID;
+    private String name;
     private String email;
     private String password;
     private String location;
@@ -32,6 +33,9 @@ public class User {
     // setter methods
     public void setID(int userID){
         this.userID = userID;
+    }
+    public void setName(String name){
+        this.name = name;
     }
     public void setEmail(String email){
        this.email = email; 
@@ -68,6 +72,9 @@ public class User {
     // getter methods
     public int getID(){
         return userID;
+    }
+    public String getName(){
+        return name;
     }
     public String getEmail(){
         return email;

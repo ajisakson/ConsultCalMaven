@@ -20,6 +20,6 @@
       </Label>
       <TextField fx:id="userNameInput" layoutX="48.0" layoutY="221.0" prefHeight="25.0" prefWidth="179.0" promptText="Username/Email" />
       <PasswordField fx:id="passwordInput" layoutX="47.0" layoutY="260.0" onAction="#handleLoginRequest" prefHeight="25.0" prefWidth="179.0" promptText="Password" />
-      <Button fx:id="submitLoginForm" layoutX="180.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleLoginRequest" text="Login" />
+      <Button fx:id="submitLoginForm" layoutX="180.0" layoutY="302.0" mnemonicParsing="false" onAction="#proceedToMainScreen" text="Login" />
     </children>
 </AnchorPane>

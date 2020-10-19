@@ -8,6 +8,8 @@ package austinisakson.consultcalmaven;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
@@ -80,10 +82,35 @@ public class ApptDetailsController implements Initializable {
     Label updatedByLabel = new Label();
 
     @FXML
+    private Appointment selectedAppt;
+    
+    SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
+    DateTimeFormatter timeOnly = DateTimeFormatter.ofPattern("HH:mm");
+    
+    public void transferAppt(Appointment selectedAppt){
+        this.selectedAppt = selectedAppt;
+        apptDate.setValue(selectedAppt.getStart().toZonedDateTime().toLocalDate());
+        startTime.setValue(timeOnly.format(selectedAppt.getStart().toZonedDateTime()));
+        endTime.setValue(timeOnly.format(selectedAppt.getEnd().toZonedDateTime()));
+        location.setText(selectedAppt.getLocation());
+        client.setValue(selectedAppt.getClientID());
+        details.setText(selectedAppt.getDetails());
+        contact.setText(selectedAppt.getContact());
+        completed.setSelected(selectedAppt.getCompleted());
+        
+        createdDateLabel.setText("Created Date: " + selectedAppt.getCreatedDate());
+        createdByLabel.setText("Created By: " + selectedAppt.getCreatedBy());
+        lastUpdateLabel.setText("Last Updated: " + selectedAppt.getLastUpdate());
+        updatedByLabel.setText("Updated By: " + selectedAppt.getLastUpdateBy());
+    }
+    
+    @FXML
     private void handleCancel(ActionEvent event) throws IOException {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+   
+    
     
     /**
      * Initializes the controller class.

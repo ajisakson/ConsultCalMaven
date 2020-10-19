@@ -109,7 +109,7 @@ public class Appointment {
     public Timestamp getCreatedDate(){
         return createdDate;
     }
-    public String CreatedBy(){
+    public String getCreatedBy(){
         return createdBy;
     }
     public Timestamp getLastUpdate(){
