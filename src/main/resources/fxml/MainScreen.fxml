@@ -29,7 +29,6 @@
       </TableView>
       <RadioButton fx:id="upcoming" layoutX="497.0" layoutY="29.0" mnemonicParsing="false" text="Upcoming" />
       <RadioButton fx:id="previous" layoutX="599.0" layoutY="29.0" mnemonicParsing="false" text="Previous" />
-      <Button fx:id="adminPanel" layoutX="31.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleAdminPanel" prefHeight="25.0" prefWidth="92.0" text="Admin Panel" />
       <Button fx:id="logoutButton" layoutX="32.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="25.0" prefWidth="92.0" text="Logout" />
       <Label layoutX="149.0" layoutY="27.0" text="Your Appointments">
          <font>

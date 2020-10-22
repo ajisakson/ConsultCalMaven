@@ -16,7 +16,7 @@
             <Font name="Verdana" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="searchButton" layoutX="722.0" layoutY="25.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="searchButton" layoutX="722.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleSearch" text="Search" />
       <Button fx:id="clientsButton" layoutX="32.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleManageClients" prefHeight="25.0" prefWidth="92.0" text="Clients" />
       <Button fx:id="homeButton" layoutX="32.0" layoutY="63.0" mnemonicParsing="false" onAction="#handleMainScreen" prefHeight="25.0" prefWidth="92.0" text="Home" />
       <Button fx:id="reportsButton" layoutX="32.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleReports" prefHeight="25.0" prefWidth="92.0" text="Reports" />
@@ -30,16 +30,15 @@
             <TableColumn fx:id="column6" prefWidth="93.0" text="Location" />
          </columns>
       </TableView>
-      <Button fx:id="adminButton" layoutX="31.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleAdminPanel" prefHeight="25.0" prefWidth="92.0" text="Admin Panel" />
       <Button fx:id="logoutButton" layoutX="32.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="25.0" prefWidth="92.0" text="Logout" />
       <Label layoutX="149.0" layoutY="27.0" text="Appointments">
          <font>
             <Font name="Verdana" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="searchField" layoutX="518.0" layoutY="25.0" prefHeight="25.0" prefWidth="196.0" />
+      <TextField fx:id="searchField" layoutX="518.0" layoutY="25.0" prefHeight="25.0" prefWidth="196.0" promptText="Search" />
       <Button fx:id="addButton" layoutX="31.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleApptAdd" prefHeight="25.0" prefWidth="92.0" text="Add" />
       <Button fx:id="viewButton" layoutX="31.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleApptView" prefHeight="25.0" prefWidth="92.0" text="View" />
-      <ChoiceBox fx:id="searchType" layoutX="353.0" layoutY="25.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="searchOptions" layoutX="353.0" layoutY="25.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -5,9 +5,7 @@
  */
 package austinisakson.consultcalmaven;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -22,7 +20,6 @@ public class Appointment {
     private String location;
     private String contact;
     private boolean completed;
-    private GregorianCalendar date;
     private GregorianCalendar start;
     private GregorianCalendar end;
     private Timestamp createdDate;
@@ -52,9 +49,6 @@ public class Appointment {
     }
     public void setContact(String contact){
         this.contact = contact;
-    }
-    public void setDate(GregorianCalendar date){
-        this.date = date;
     }
     public void setStart(GregorianCalendar start){
         this.start = start;
@@ -96,9 +90,6 @@ public class Appointment {
     }
     public String getContact(){
         return contact;
-    }
-    public GregorianCalendar getDate(){
-        return date;
     }
     public GregorianCalendar getStart(){
         return start;

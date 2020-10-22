@@ -46,6 +46,7 @@ public class LoginScreenController implements Initializable {
     @FXML
     private Button submitLoginForm;
     
+    // CHANGE THE BUTTON ON THE LOGINSCREEN.FXML TO #HANDLELOGINREQUEST
     @FXML
     private void handleLoginRequest(ActionEvent event) throws IOException
     {

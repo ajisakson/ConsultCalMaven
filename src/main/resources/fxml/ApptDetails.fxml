@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="392.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="austinisakson.consultcalmaven.ApptDetailsController">
    <children>
-      <Button fx:id="saveButton" layoutX="420.0" layoutY="350.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Save" />
+      <Button fx:id="saveButton" layoutX="420.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="96.0" text="Save" />
       <Button fx:id="cancelButton" layoutX="420.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="96.0" text="Cancel" />
       <DatePicker fx:id="apptDate" layoutX="27.0" layoutY="56.0" promptText="Appointment Date" />
       <ChoiceBox fx:id="startTime" layoutX="28.0" layoutY="111.0" prefWidth="150.0" />
@@ -33,7 +33,7 @@
       </Label>
       <Label layoutX="27.0" layoutY="153.0" text="End Time" />
       <Label layoutX="29.0" layoutY="93.0" text="Start Time" />
-      <Button fx:id="deleteButton" layoutX="420.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Delete" />
+      <Button fx:id="deleteButton" layoutX="420.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="25.0" prefWidth="96.0" text="Delete" />
       <Label layoutX="30.0" layoutY="210.0" text="Location/URL" />
       <Label layoutX="30.0" layoutY="260.0" text="Client" />
       <Label layoutX="229.0" layoutY="56.0" text="Details" />

@@ -7,16 +7,13 @@ package austinisakson.consultcalmaven;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,16 +22,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import static austinisakson.consultcalmaven.DBConnection.conn;
-import java.util.Optional;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -42,8 +36,6 @@ import javafx.scene.control.ButtonType;
  * @author ajisa
  */
 public class ClientScreenController implements Initializable {
-
-    private int clientID = 0;
     
     @FXML
     Button homeButton = new Button();
@@ -56,10 +48,13 @@ public class ClientScreenController implements Initializable {
     @FXML
     Button viewButton = new Button();
     @FXML
-    Button adminButton = new Button();
-    @FXML
     Button logoutButton = new Button();
     
+    
+    @FXML
+    ChoiceBox<String> searchOptions = new ChoiceBox();
+    @FXML
+    TextField searchField = new TextField();
     @FXML
     Button searchButton = new Button();
 
@@ -75,7 +70,13 @@ public class ClientScreenController implements Initializable {
     @FXML
     private TableColumn<Client, String> column4 = new TableColumn<>("Location");
     @FXML
-    private TableView clientView = new TableView();       
+    private TableView clientView = new TableView();
+    
+    private ObservableList<String> searchChoices = FXCollections.observableArrayList(
+        "Name", "Email", "Location", "Phone"
+    );
+    
+    FilteredList<Client> searchResults = new FilteredList(clients, c -> true);
     
     @FXML
     private void handleMainScreen(ActionEvent event) throws IOException {
@@ -112,8 +113,6 @@ public class ClientScreenController implements Initializable {
     
     @FXML
     private void handleClientAdd(ActionEvent event) throws IOException {
-        
-        Client selectedClient = new Client();
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ClientDetails.fxml"));
         Parent secondParent = loader.load();
@@ -164,19 +163,6 @@ public class ClientScreenController implements Initializable {
             alert.setContentText("Please select a client from the table prior to clicking the View button. To add a new client please click the Add button.");
             alert.showAndWait();
         }
-        
-    }
-    
-    
-    @FXML
-    private void handleAdminPanel(ActionEvent event) throws IOException {
-        
-        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
-        Scene mainScene = new Scene(mainParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(mainScene);
-        window.show();
     }
     
     @FXML
@@ -192,269 +178,30 @@ public class ClientScreenController implements Initializable {
     }
     
     @FXML
-    private void handleSearch(ActionEvent event) throws IOException {
-        
-    }
-    
-    /*
-    @FXML
-    private void handleAddSave(ActionEvent event) throws SQLException {
-        // if cust ID is not null, then use SQL update query with info
-        if (nameField.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Add/Save Error");
-            alert.setHeaderText("Error adding or updating client:");
-            alert.setContentText("Name cannot be blank!");
-            alert.showAndWait();
-            throw new IllegalArgumentException("Name cannot be blank!");
-        }
-        else if (addressField.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Add/Save Error");
-            alert.setHeaderText("Error adding or updating client:");
-            alert.setContentText("Address cannot be blank!");
-            alert.showAndWait();
-            throw new IllegalArgumentException("Address cannot be blank!");
-        }
-        else if (cityField.getValue() == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Add/Save Error");
-            alert.setHeaderText("Error adding or updating client:");
-            alert.setContentText("Please select a city!");
-            alert.showAndWait();
-            throw new IllegalArgumentException("City cannot be blank!");
-        }
-        else if (postalCodeField.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Add/Save Error");
-            alert.setHeaderText("Error adding or updating client:");
-            alert.setContentText("Postal code cannot be blank!");
-            alert.showAndWait();
-            throw new IllegalArgumentException("Postal Code cannot be blank!");
-        }
-        else if (phoneField.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Add/Save Error");
-            alert.setHeaderText("Error adding or updating client:");
-            alert.setContentText("Please enter a phone number!");
-            alert.showAndWait();
-            throw new IllegalArgumentException("Phone cannot be blank!");
-        }
-        else{
-            
-            if (clientID > 0){
-                //update row for where custid = sql id on cust table
-                String query = "UPDATE client SET clientName = ?, lastUpdate = NOW(), lastUpdateBy = ? WHERE clientid = ?";
-                PreparedStatement updateRow = conn.prepareStatement(query);
-                updateRow.setString(1, nameField.getText());
-                updateRow.setString(2, LoginScreenController.currentUser);
-                updateRow.setInt(3, clientID);
-
-                String query2 = "UPDATE address SET address = ?, address2 = ?, cityId = ?, postalCode = ?, phone = ?, lastUpdate = NOW(), lastUpdateBy = ? WHERE addressid = ?";
-                PreparedStatement updateRow2 = conn.prepareStatement(query2);
-                updateRow2.setString(1, addressField.getText());
-                updateRow2.setString(2, address2Field.getText());
-
-                int cityID = 0;
-                switch (cityField.getValue().toString()){
-                    case "Pheonix":
-                        cityID = 1;
-                        break;
-                    case "New York":
-                        cityID = 2;
-                        break;
-                    case "London":
-                        cityID = 3;
-                        break;    
-                }
-                updateRow2.setInt(3, cityID);
-
-                updateRow2.setString(4, postalCodeField.getText());
-                updateRow2.setString(5, phoneField.getText());
-                updateRow2.setString(6, LoginScreenController.currentUser);
-                updateRow2.setInt(7, addressID);
-                updateRow.execute();
-                updateRow2.execute();
+    private void handleSearch(ActionEvent event) throws IOException, SQLException {
+        // searchResults
+        searchResults.removeAll();
+        switch(searchOptions.getValue()){
+            case "Name" ->  {
+                searchResults.setPredicate(c -> c.getContactName().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
+                clientView.setItems(searchResults);
             }
-
-            // if cust ID is null, create new one with given info
-            else {
-                //insert row
-                String query = "INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES (?, ?, ?, ?, ?, NOW(), ?, NOW(), ?)";
-
-                PreparedStatement insertAddress = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                insertAddress.setString(1, addressField.getText());
-                insertAddress.setString(2, address2Field.getText());
-                int cityID = 0;
-                switch (cityField.getValue().toString()){
-                    case "Pheonix":
-                        cityID = 1;
-                        break;
-                    case "New York":
-                        cityID = 2;
-                        break;
-                    case "London":
-                        cityID = 3;
-                        break;    
-                }
-                insertAddress.setInt(3, cityID);
-                insertAddress.setString(4, postalCodeField.getText());
-                insertAddress.setString(5, phoneField.getText());
-                insertAddress.setString(6, LoginScreenController.currentUser);
-                insertAddress.setString(7, LoginScreenController.currentUser);
-                insertAddress.execute();
-
-                ResultSet rs = insertAddress.getGeneratedKeys();
-                int generatedKey = 0;
-                if(rs.next()) {
-                    generatedKey = rs.getInt(1);
-                }
-
-                query = "INSERT INTO client (clientName, addressID, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES (?, ?, 1, NOW(), ?, NOW(), ?)";
-                PreparedStatement insertclient = conn.prepareStatement(query);
-                // FIX THIS SQL QUERY AND STUFF
-                insertclient.setString(1, nameField.getText());
-                insertclient.setInt(2, generatedKey);
-                insertclient.setString(3, LoginScreenController.currentUser);
-                insertclient.setString(4, LoginScreenController.currentUser);
-                insertclient.execute();
+            case "Email" ->  {
+                searchResults.setPredicate(c -> c.getContactEmail().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
+                clientView.setItems(searchResults);
             }
-
-            clientID = 0;
-            addressID = 0;
-            nameField.clear();
-            addressField.clear();
-            address2Field.clear();
-            cityField.setValue(null);
-            postalCodeField.clear();
-            phoneField.clear();
-
-            // refresh tableview
-            clientView.getItems().clear();
-            clients.clear();
-            addresses.clear();
-
-            ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
-            while (custTable.next()){
-
-                Client newclient = new Client();
-                newclient.setID(custTable.getInt("clientid"));
-                newclient.setclient(custTable.getString("clientName"));
-                newclient.setAddressID(custTable.getInt("addressID"));
-                newclient.setActive(custTable.getBoolean("active"));
-                newclient.setCreatedDate(custTable.getDate("createDate"));
-                newclient.setCreatedBy(custTable.getString("createdBy"));
-                newclient.setLastUpdate(custTable.getTimestamp("lastUpdate"));
-                newclient.setLastUpdateBy(custTable.getString("lastUpdateBy"));
-                clients.add(newclient);
+            case "Phone" ->  {
+                searchResults.setPredicate(c -> c.getContactPhone().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
+                clientView.setItems(searchResults);
             }
-
-            ResultSet addressSet = conn.createStatement().executeQuery("SELECT * FROM address");
-            while (addressSet.next()){
-
-                Location newAddress = new Location();
-                newAddress.setID(addressSet.getInt("addressid"));
-                newAddress.setAddress(addressSet.getString("address"));
-                newAddress.setAddress2(addressSet.getString("address2"));
-                newAddress.setCityID(addressSet.getInt("cityId"));
-                newAddress.setPostalCode(addressSet.getString("postalCode"));
-                newAddress.setPhone(addressSet.getString("phone"));
-                newAddress.setCreatedDate(addressSet.getDate("createDate"));
-                newAddress.setCreatedBy(addressSet.getString("createdBy"));
-                newAddress.setLastUpdate(addressSet.getTimestamp("lastUpdate"));
-                newAddress.setLastUpdateBy(addressSet.getString("lastUpdateBy"));
-                addresses.add(newAddress);
+            case "Location" ->  {
+                searchResults.setPredicate(c -> c.getLocation().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
+                clientView.setItems(searchResults);
             }
-
-            clientView.setItems(clients);
+               
         }
     }
     
-    @FXML
-    private void handleUpdate(ActionEvent event) {
-        
-        // take selected value from tableview and populate the left side text fields with the info to be editable
-        Client selectedclient = (Client) clientView.getSelectionModel().getSelectedItem();
-        clientID = selectedclient.getID();
-        addressID = selectedclient.getAddressID();
-        nameField.setText(selectedclient.getclientName());
-        Location selectedAddress = new Location();
-        for (Location address : addresses){
-            if (addressID == address.getID()){
-                selectedAddress = address;
-            }
-        }
-        addressField.setText(selectedAddress.getAddress());
-        address2Field.setText(selectedAddress.getAddress2());
-        switch(selectedAddress.getCityID()){
-            case 1:
-                cityField.setValue("Pheonix");
-                break;
-            case 2:
-                cityField.setValue("New York");
-                break;
-            case 3:
-                cityField.setValue("London");
-                break;
-        }
-        postalCodeField.setText(selectedAddress.getPostalCode());
-        phoneField.setText(selectedAddress.getPhone());
-        
-    }
-    
-    @FXML
-    private void handleDelete(ActionEvent event) throws SQLException {
-        // delete selected client from the SQL table
-        
-        Client selectedclient = (Client) clientView.getSelectionModel().getSelectedItem();
-        int deleteclientID = selectedclient.getID();
-        String query = "DELETE FROM client WHERE clientid = ?";
-        PreparedStatement deleteRow = conn.prepareStatement(query);
-        deleteRow.setInt(1, deleteclientID);
-        deleteRow.execute();
-        clients.remove(clientView.getSelectionModel().getSelectedItem());
-        
-        
-        // refresh table view
-        clientID = 0;
-        addressID = 0;
-        nameField.clear();
-        addressField.clear();
-        address2Field.clear();
-        cityField.setValue(null);
-        postalCodeField.clear();
-        phoneField.clear();
-        clientView.getItems().clear();
-            
-        ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
-        while (custTable.next()){
-            Client newclient = new Client();
-            newclient.setID(custTable.getInt("clientid"));
-            newclient.setclient(custTable.getString("clientName"));
-            newclient.setAddressID(custTable.getInt("addressID"));
-            newclient.setActive(custTable.getBoolean("active"));
-            newclient.setCreatedDate(custTable.getDate("createDate"));
-            newclient.setCreatedBy(custTable.getString("createdBy"));
-            newclient.setLastUpdate(custTable.getTimestamp("lastUpdate"));
-            newclient.setLastUpdateBy(custTable.getString("lastUpdateBy"));
-            clients.add(newclient);
-            System.out.println("New client added from database!");
-        }
-
-        clientView.setItems(clients);
-    }
-    
-    @FXML
-    private void handleExit(ActionEvent event) throws IOException {
-        
-        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
-        Scene mainScene = new Scene(mainParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(mainScene);
-        window.show();
-    }
-    */
     
     /**
      * Initializes the controller class.
@@ -467,32 +214,16 @@ public class ClientScreenController implements Initializable {
         column3.setCellValueFactory(new PropertyValueFactory<>("contactPhone"));
         column4.setCellValueFactory(new PropertyValueFactory<>("location"));
         
-        // populate Client table
+        // populate search options
+        searchOptions.setItems(searchChoices);
+        searchOptions.setValue("Name");
         
-        try {
-            
+        // populate Client table
+        try {  
             // Query result set for client Table, load each client as an object of the client class, display as a TableView
             clientView.getItems().clear();
-            int clientCount = 0;
-            ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
-            while (custTable.next()){
-                
-                Client newClient = new Client();
-                newClient.setID(custTable.getInt("id"));
-                newClient.setContactName(custTable.getString("contact_name"));
-                newClient.setContactEmail(custTable.getString("contact_email"));
-                newClient.setContactPhone(custTable.getString("contact_phone"));
-                newClient.setLocation(custTable.getString("location"));
-                newClient.setActive(custTable.getBoolean("active"));
-                newClient.setCreatedDate(custTable.getDate("create_time"));
-                newClient.setCreatedBy(custTable.getString("created_by"));
-                newClient.setLastUpdate(custTable.getTimestamp("last_update"));
-                newClient.setLastUpdateBy(custTable.getString("updated_by"));
-                clients.add(newClient);
-                clientCount++;
-            }
-            System.out.println(clientCount + " clients added from the database.");
-            
+            this.clients.clear();
+            this.clients = Scheduler.loadClients(clients);
             clientView.setItems(clients);
             
         } catch (SQLException ex) {

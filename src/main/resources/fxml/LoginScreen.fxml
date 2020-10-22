@@ -13,13 +13,13 @@
          <font>
             <Font name="Verdana" size="18.0" />
          </font></Label>
-      <Label fx:id="label1" layoutX="14.0" layoutY="361.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="98.0" text="Version 0.2" textAlignment="CENTER">
+      <Label fx:id="label1" layoutX="14.0" layoutY="361.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="98.0" text="Version 0.3" textAlignment="CENTER">
          <font>
             <Font name="Verdana" size="12.0" />
          </font>
       </Label>
       <TextField fx:id="userNameInput" layoutX="48.0" layoutY="221.0" prefHeight="25.0" prefWidth="179.0" promptText="Username/Email" />
       <PasswordField fx:id="passwordInput" layoutX="47.0" layoutY="260.0" onAction="#handleLoginRequest" prefHeight="25.0" prefWidth="179.0" promptText="Password" />
-      <Button fx:id="submitLoginForm" layoutX="180.0" layoutY="302.0" mnemonicParsing="false" onAction="#proceedToMainScreen" text="Login" />
+      <Button fx:id="submitLoginForm" layoutX="180.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleLoginRequest" text="Login" />
     </children>
 </AnchorPane>

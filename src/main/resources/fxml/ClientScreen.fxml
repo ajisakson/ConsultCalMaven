@@ -28,16 +28,15 @@
             <TableColumn fx:id="column4" prefWidth="136.0" text="Location" />
          </columns>
       </TableView>
-      <Button fx:id="adminButton" layoutX="31.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleAdminPanel" prefHeight="25.0" prefWidth="92.0" text="Admin Panel" />
       <Button fx:id="logoutButton" layoutX="32.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="25.0" prefWidth="92.0" text="Logout" />
       <Label layoutX="149.0" layoutY="27.0" text="Clients">
          <font>
             <Font name="Verdana" size="16.0" />
          </font>
       </Label>
-      <TextField layoutX="518.0" layoutY="25.0" prefHeight="25.0" prefWidth="196.0" />
+      <TextField fx:id="searchField" layoutX="518.0" layoutY="25.0" prefHeight="25.0" prefWidth="196.0" promptText="Search" />
       <Button fx:id="addButton" layoutX="31.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleClientAdd" prefHeight="25.0" prefWidth="92.0" text="Add" />
       <Button fx:id="viewButton" layoutX="31.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleClientView" prefHeight="25.0" prefWidth="92.0" text="View" />
-      <ChoiceBox layoutX="353.0" layoutY="25.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="searchOptions" layoutX="353.0" layoutY="25.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -9,16 +9,16 @@ import static austinisakson.consultcalmaven.DBConnection.conn;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -35,6 +35,8 @@ public class ClientDetailsController implements Initializable {
     
     // Declare FXML Elements
 
+    @FXML
+    private ObservableList<Client> clients = FXCollections.observableArrayList();
     @FXML
     private TextField contactName;
     @FXML
@@ -67,6 +69,8 @@ public class ClientDetailsController implements Initializable {
     @FXML
     private Client selectedClient = new Client();
     
+    private boolean isValid;
+    
     public void transferClient(Client selectedClient){
         this.selectedClient = selectedClient;
         contactName.setText(selectedClient.getContactName());
@@ -88,58 +92,56 @@ public class ClientDetailsController implements Initializable {
     
     @FXML
     private void handleSave(ActionEvent event) throws IOException {
-        
-        // if new Client
-        if(selectedClient.getID() <= 0) {
-            String query = "INSERT INTO client(contact_name, contact_email, contact_phone, location, active, create_time, created_by, last_update, updated_by) "
-                                     + "VALUES(?, ?, ?, ?, ?, NOW(), ?, NOW(), ?);";
+        if (inputValidation()) {
+            // if new Client
+            if(selectedClient.getID() <= 0) {
+                String query = "INSERT INTO client(contact_name, contact_email, contact_phone, location, active, create_time, created_by, last_update, updated_by) "
+                                         + "VALUES(?, ?, ?, ?, ?, NOW(), ?, NOW(), ?);";
 
-            try {
-                PreparedStatement sqlQuery = conn.prepareStatement(query);
-                
-                sqlQuery.setString(1, contactName.getText());
-                sqlQuery.setString(2, email.getText());
-                sqlQuery.setString(3, phone.getText());
-                sqlQuery.setString(4, location.getText());
-                sqlQuery.setBoolean(5, active.isSelected());
-                sqlQuery.setString(6, LoginScreenController.currentUser);
-                sqlQuery.setString(7, LoginScreenController.currentUser);
+                try {
+                    PreparedStatement sqlQuery = conn.prepareStatement(query);
 
-                sqlQuery.execute();
+                    sqlQuery.setString(1, contactName.getText());
+                    sqlQuery.setString(2, email.getText());
+                    sqlQuery.setString(3, phone.getText());
+                    sqlQuery.setString(4, location.getText());
+                    sqlQuery.setBoolean(5, active.isSelected());
+                    sqlQuery.setString(6, LoginScreenController.currentUser);
+                    sqlQuery.setString(7, LoginScreenController.currentUser);
+
+                    sqlQuery.execute();
+                }
+                catch (SQLException ex) {
+                    System.out.println("SQL Exception thrown... error: " + ex);
+                }
             }
 
-            catch (SQLException ex) {
-                System.out.println("SQL Exception thrown... error: " + ex);
+            // if updating Client
+            else if(selectedClient.getID() > 0){
+                String query = "UPDATE client SET contact_name=?, contact_email=?, contact_phone=?, location=?, active=?, last_update=NOW(), updated_by=? WHERE id=?";
+
+                try {
+                    PreparedStatement sqlQuery = conn.prepareStatement(query);
+
+                    sqlQuery.setString(1, contactName.getText());
+                    sqlQuery.setString(2, email.getText());
+                    sqlQuery.setString(3, phone.getText());
+                    sqlQuery.setString(4, location.getText());
+                    sqlQuery.setBoolean(5, active.isSelected());
+                    sqlQuery.setString(6, LoginScreenController.currentUser);
+                    sqlQuery.setInt(7, selectedClient.getID());
+
+                    sqlQuery.execute();
+                }
+                catch (SQLException ex) {
+                    System.out.println("SQL Exception thrown... error: " + ex);
+                }
             }
+
+            Stage stage = (Stage) saveButton.getScene().getWindow();
+            stage.close();
         }
         
-        // if updating Client
-        else if(selectedClient.getID() > 0){
-            String query = "UPDATE client WHERE id=? (contact_name, contact_email, contact_phone, location, active, last_update, update_by) " +
-                                       "VALUES (?, ?, ?, ?, ?, NOW(), ?);";
-
-            try {
-                PreparedStatement sqlQuery = conn.prepareStatement(query);
-                
-                sqlQuery.setInt(1, selectedClient.getID());
-                sqlQuery.setString(2, contactName.getText());
-                sqlQuery.setString(3, email.getText());
-                sqlQuery.setString(4, phone.getText());
-                sqlQuery.setString(5, location.getText());
-                sqlQuery.setBoolean(6, active.isSelected());
-                sqlQuery.setString(7, LoginScreenController.currentUser);
-                
-                sqlQuery.execute();
-            }
-
-            catch (SQLException ex) {
-                System.out.println("SQL Exception thrown... error: " + ex);
-            }
-        }
-        
-        
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
     }
     
     @FXML
@@ -155,30 +157,36 @@ public class ClientDetailsController implements Initializable {
         if(result.get() == ButtonType.YES) {
             String query = "DELETE FROM client WHERE id=?;";
 
-
             try {
                 PreparedStatement sqlQuery = conn.prepareStatement(query);
                 sqlQuery.setInt(1, selectedClient.getID());
 
                 sqlQuery.execute();
-
             }
 
             catch (SQLException ex) {
                 System.out.println("SQL Exception thrown... error: " + ex);
             }
             
-            
             Stage stage = (Stage) deleteButton.getScene().getWindow();
             stage.close();
         }
-        else {
-            
-        }
-        
-        
     }
     
+    private boolean inputValidation(){
+        if(contactName.getText().isBlank() || email.getText().isBlank() || location.getText().isBlank()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error!");
+            alert.setHeaderText("Fields must not be left empty:");
+            alert.setContentText("Please ensure all fields are filled with the client's information.");
+            alert.showAndWait();
+            return false;
+        }
+
+        else {
+            return true;
+        }
+    }
     
     /**
      * Initializes the controller class.
@@ -186,7 +194,11 @@ public class ClientDetailsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        try {
+            this.clients = Scheduler.loadClients(clients);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientDetailsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     } 
     

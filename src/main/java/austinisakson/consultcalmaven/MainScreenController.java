@@ -47,6 +47,8 @@ import static austinisakson.consultcalmaven.DBConnection.conn;
 public class MainScreenController implements Initializable {
 
     @FXML
+    private ObservableList<Client> clients = FXCollections.observableArrayList();
+    @FXML
     final ToggleGroup group = new ToggleGroup();
     @FXML
     RadioButton upcoming = new RadioButton();        
@@ -58,8 +60,6 @@ public class MainScreenController implements Initializable {
     Button manageAppts = new Button();
     @FXML
     Button reports = new Button();
-    @FXML
-    Button adminPanel = new Button();
     @FXML
     Button logoutButton = new Button();
     @FXML
@@ -92,6 +92,7 @@ public class MainScreenController implements Initializable {
         LocalDate localDate = LocalDateTime.ofInstant(cal.toInstant(), zid).toLocalDate();
         return localDate;
     }
+    
     
     @FXML
     private void handleMainScreen(ActionEvent event) throws IOException {
@@ -127,22 +128,10 @@ public class MainScreenController implements Initializable {
         window.show();
     }
     
-    
     @FXML
     private void handleReports(ActionEvent event) throws IOException {
 
         Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/ReportScreen.fxml"));
-        Scene mainScene = new Scene(mainParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(mainScene);
-        window.show();
-    }
-    
-    @FXML
-    private void handleAdminPanel(ActionEvent event) throws IOException {
-        
-        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/MainScreen.fxml"));
         Scene mainScene = new Scene(mainParent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
