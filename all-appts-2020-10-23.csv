@@ -1,0 +1,6 @@
+id,starttime,endtime,location,client,scheduler,details,completed,contact,createddate,createdby,updatedby,lastupdate
+10,2020-10-22 15:00:00,2020-10-22 15:45:00,zoom.us/meeting1,5,1,Sample appointment number 1.,0,Sample Contact 1,2020-10-22 00:02:44,sample@email.com,sample@email.com,2020-10-22 00:02:44
+11,2020-10-23 14:00:00,2020-10-23 15:30:00,zoom.us/meeting2,5,1,This is another meeting for Test Client 1.,0,Sample Contact 2,2020-10-22 00:04:20,sample@email.com,sample@email.com,2020-10-22 00:04:20
+12,2020-10-24 18:45:00,2020-10-25 00:00:00,video.google.com/meeting1,6,1,This is another meeting for Test Client 2 using Google Video.,0,Test Guy 1,2020-10-22 00:06:00,sample@email.com,sample@email.com,2020-10-22 00:06:00
+13,2020-11-04 00:30:00,2020-11-04 07:30:00,vote.org,7,1,This is election day.,0,Election Guy,2020-10-22 00:07:22,sample@email.com,sample@email.com,2020-10-22 00:07:22
+14,2020-10-23 14:30:00,2020-10-23 14:45:00,discord.gg/test,8,1,,0,Another Test Guy,2020-10-22 19:57:08,sample@email.com,sample@email.com,2020-10-22 19:57:08
