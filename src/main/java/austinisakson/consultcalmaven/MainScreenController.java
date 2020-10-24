@@ -131,11 +131,17 @@ public class MainScreenController implements Initializable {
     @FXML
     private void handleReports(ActionEvent event) throws IOException {
 
-        Parent mainParent = FXMLLoader.load(getClass().getResource("/fxml/ReportScreen.fxml"));
-        Scene mainScene = new Scene(mainParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Reports.fxml"));
+        Parent secondParent = loader.load();
+        
+        Scene secondScene = new Scene(secondParent);
+        Stage window = new Stage();
+        
+        /* to hide window
+        (Stage) ((Node) event.getSource()).getScene().getWindow();
+        */
 
-        window.setScene(mainScene);
+        window.setScene(secondScene);
         window.show();
     }
     
