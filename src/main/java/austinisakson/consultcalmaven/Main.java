@@ -5,10 +5,16 @@
  */
 package austinisakson.consultcalmaven;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author ajisa
  */
-public class UserScreenController {
+public class Main {
+    
+    public static void main(String[] args) throws SQLException, Exception {
+        Scheduler.main(args);
+    }
     
 }

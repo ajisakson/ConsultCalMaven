@@ -32,12 +32,24 @@ public class DBConnection {
     
     static Connection conn;
     
+    /**
+     *
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws Exception
+     */
     public static void makeConnection() throws ClassNotFoundException, SQLException, Exception {
         Class.forName(driver);
         conn = (Connection) DriverManager.getConnection(DB_URL, username, password);
         System.out.println("Connection successful!");
     }
     
+    /**
+     *
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws Exception
+     */
     public static void closeConnection() throws ClassNotFoundException, SQLException, Exception {
         conn.close();
         System.out.println("Connection closed!");

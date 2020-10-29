@@ -71,6 +71,10 @@ public class ClientDetailsController implements Initializable {
     
     private boolean isValid;
     
+    /**
+     *
+     * @param selectedClient
+     */
     public void transferClient(Client selectedClient){
         this.selectedClient = selectedClient;
         contactName.setText(selectedClient.getContactName());
@@ -190,6 +194,8 @@ public class ClientDetailsController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

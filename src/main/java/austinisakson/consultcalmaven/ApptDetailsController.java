@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -113,27 +114,32 @@ public class ApptDetailsController implements Initializable {
     private Appointment selectedAppt = new Appointment();
     
     SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
-    SimpleDateFormat timeOnly = new SimpleDateFormat("HH:mm");
+    DateTimeFormatter timeOnlyDTF = DateTimeFormatter.ofPattern("HH:mm");
+    SimpleDateFormat timeOnlySDF =  new SimpleDateFormat("HH:mm");
     DateTimeFormatter sqlTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
+    /**
+     *
+     * @param selectedAppt
+     */
     public void transferAppt(Appointment selectedAppt){
         this.selectedAppt = selectedAppt;
-        apptDate.setValue(selectedAppt.getStart().toZonedDateTime().toLocalDate());
-        startTime.setValue(timeOnly.format(selectedAppt.getStart().toZonedDateTime()));
-        endTime.setValue(timeOnly.format(selectedAppt.getEnd().toZonedDateTime()));
-        location.setText(selectedAppt.getLocation());
-        selectedAppt.getClientID();
+        apptDate.setValue(this.selectedAppt.getStart().toZonedDateTime().toLocalDate());
+        startTime.setValue(timeOnlyDTF.format(this.selectedAppt.getStart().toZonedDateTime()));
+        endTime.setValue(timeOnlyDTF.format(this.selectedAppt.getEnd().toZonedDateTime()));
+        location.setText(this.selectedAppt.getLocation());
+        this.selectedAppt.getClientID();
         clients.stream().filter(apptClient ->
-            (apptClient.getID() == selectedAppt.getClientID())).forEachOrdered(apptClient ->
+            (apptClient.getID() == this.selectedAppt.getClientID())).forEachOrdered(apptClient ->
                 {client.setValue(apptClient);});
-        details.setText(selectedAppt.getDetails());
-        contact.setText(selectedAppt.getContact());
-        completed.setSelected(selectedAppt.getCompleted());
+        details.setText(this.selectedAppt.getDetails());
+        contact.setText(this.selectedAppt.getContact());
+        completed.setSelected(this.selectedAppt.getCompleted());
         
-        createdDateLabel.setText("Created Date: " + selectedAppt.getCreatedDate());
-        createdByLabel.setText("Created By: " + selectedAppt.getCreatedBy());
-        lastUpdateLabel.setText("Last Updated: " + selectedAppt.getLastUpdate());
-        updatedByLabel.setText("Updated By: " + selectedAppt.getLastUpdateBy());
+        createdDateLabel.setText("Created Date: " + this.selectedAppt.getCreatedDate());
+        createdByLabel.setText("Created By: " + this.selectedAppt.getCreatedBy());
+        lastUpdateLabel.setText("Last Updated: " + this.selectedAppt.getLastUpdate());
+        updatedByLabel.setText("Updated By: " + this.selectedAppt.getLastUpdateBy());
     }
     
     @FXML
@@ -292,7 +298,7 @@ public class ApptDetailsController implements Initializable {
             alert.showAndWait();
             return false;
         }
-        else if (apptDate.getValue().isBefore(LocalDate.now())){
+        else if (apptDate.getValue().isBefore(LocalDate.now())) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error!");
             alert.setHeaderText("Appointments prior to today cannot be created:");
@@ -300,7 +306,7 @@ public class ApptDetailsController implements Initializable {
             alert.showAndWait();
             return false;
         }
-        else if (timeOnly.parse(startTime.getValue()).after(timeOnly.parse(endTime.getValue()))) {
+        else if (timeOnlySDF.parse(startTime.getValue()).after(timeOnlySDF.parse(endTime.getValue()))){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error!");
             alert.setHeaderText("Start time cannot be after End time:");
@@ -313,9 +319,27 @@ public class ApptDetailsController implements Initializable {
         }
     }
     
+    /**
+     *
+     * @param cal1
+     * @param cal2
+     * @return
+     */
+    public boolean isSameDateTime(Calendar cal1, Calendar cal2) {
+    // compare if is the same ERA, YEAR, DAY, HOUR, MINUTE and SECOND
+    return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA)
+           && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+           && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+           && cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY)
+           && cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE)
+           && cal1.get(Calendar.SECOND) == cal2.get(Calendar.SECOND));
+}
+    
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

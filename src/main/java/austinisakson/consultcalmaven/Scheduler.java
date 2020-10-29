@@ -20,10 +20,15 @@ import javafx.stage.Stage;
 /**
  *
  * @author ajisa
- */
+ */    
+        
 public class Scheduler extends Application {
    
-    
+    /**
+     *
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginScreen.fxml"));
@@ -36,7 +41,11 @@ public class Scheduler extends Application {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException, Exception {
         
         DBConnection.makeConnection();
@@ -44,6 +53,12 @@ public class Scheduler extends Application {
         DBConnection.closeConnection();
     }
     
+    /**
+     *
+     * @param clients
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Client> loadClients(ObservableList<Client> clients) throws SQLException{
         ResultSet custTable = conn.createStatement().executeQuery("SELECT * FROM client");
         while (custTable.next()){
@@ -64,6 +79,12 @@ public class Scheduler extends Application {
         return clients;
     }
     
+    /**
+     *
+     * @param appointments
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> loadAppts(ObservableList<Appointment> appointments) throws SQLException {
         ResultSet appointmentTable = conn.createStatement().executeQuery("SELECT * FROM appointment");
         while (appointmentTable.next()){

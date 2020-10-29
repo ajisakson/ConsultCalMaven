@@ -189,29 +189,32 @@ public class ClientScreenController implements Initializable {
         // searchResults
         searchResults.removeAll();
         switch(searchOptions.getValue()){
-            case "Name" -> {
+            case "Name":
                 searchResults.setPredicate(c -> c.getContactName().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
                 clientView.setItems(searchResults);
-            }
-            case "Email" ->  {
+                break;
+            case "Email":
                 searchResults.setPredicate(c -> c.getContactEmail().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
                 clientView.setItems(searchResults);
-            }
-            case "Phone" ->  {
+                break;
+            case "Phone":
                 searchResults.setPredicate(c -> c.getContactPhone().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
                 clientView.setItems(searchResults);
-            }
-            case "Location" ->  {
+                break;
+            case "Location":
                 searchResults.setPredicate(c -> c.getLocation().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
                 clientView.setItems(searchResults);
-            }
-               
+                break;
+            default:
+                clientView.setItems(clients);
         }
     }
     
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

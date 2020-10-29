@@ -113,7 +113,11 @@ public class LoginScreenController implements Initializable {
         window.show();
     }
    
-    
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

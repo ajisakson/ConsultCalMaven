@@ -192,76 +192,37 @@ public class AppointmentScreenController implements Initializable {
         // searchResults
         searchResults.removeAll();
         switch(searchOptions.getValue()){
-            case "Date" ->  {
+            case "Date":
                 searchResults.setPredicate(a -> dateOnly.format(a.getStart().getTime()).contains(searchField.getText().trim()));
                 appointmentView.setItems(searchResults);
-            }
-            case "Start Time" ->  {
+                break;
+            case "Start Time":
                 searchResults.setPredicate(a -> timeOnly.format(a.getStart().getTime()).contains(searchField.getText().trim()));
                 appointmentView.setItems(searchResults);
-            }
-            case "End Time" ->  {
+                break;
+            case "End Time":
                 searchResults.setPredicate(a -> timeOnly.format(a.getEnd().getTime()).contains(searchField.getText().trim()));
                 appointmentView.setItems(searchResults);
-            }
-            case "Contact" ->  {
+                break;
+            case "Contact":
                 searchResults.setPredicate(a -> a.getContact().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
                 appointmentView.setItems(searchResults);
-            }
-            case "Location" ->  {
+                break;
+            case "Location":
                 searchResults.setPredicate(a -> a.getLocation().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
                 appointmentView.setItems(searchResults);
-            }
+                break;
+            default:
+                appointmentView.setItems(appointments);
                
         }
     }
     
-    /*
-    
-    
-    private boolean checkOverlap() throws ParseException{
-        boolean overlappingAppts = false;
-        for (Appointment appt : data) {
-            if (LoginScreenController.currentUserId == appt.getUserID()){
-                GregorianCalendar newApptStartTime = inputToGregCal(startTimeField.getText());
-                GregorianCalendar oldApptStartTime = appt.getStart();
-                GregorianCalendar newApptEndTime = inputToGregCal(endTimeField.getText());
-                GregorianCalendar oldApptEndTime = appt.getEnd();
-                
-                if (((newApptStartTime.after(oldApptStartTime)) && (newApptStartTime.before(oldApptEndTime))) || 
-                    ((newApptEndTime.after(oldApptStartTime)) && (newApptEndTime.before(oldApptEndTime)))) {
-                    overlappingAppts = true;
-                }
-            }
-
-        }
-        return overlappingAppts;
-    }
-    
-    private boolean duringBizHours() throws ParseException{
-        String sTime = startTimeField.getText();
-        String eTime = endTimeField.getText();
-        boolean isDuringHours = true;
-        String startTime = "08:00";
-        String endTime = "17:00";
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        Date d1 = sdf.parse(startTime);
-        Date d2 = sdf.parse(endTime);
-        Date d3 = sdf.parse(sTime);
-        Date d4 = sdf.parse(eTime);
-        
-        if (!d3.after(d1) || !d3.before(d2) ||
-           (!d4.after(d1) || !d4.before(d2))){
-            isDuringHours = false;
-        }
-        return isDuringHours;
-    }
-   
-    
-    */
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

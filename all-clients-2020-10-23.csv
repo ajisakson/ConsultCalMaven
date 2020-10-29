@@ -1,6 +1,0 @@
-id,contact_name,contact_email,contact_phone,location,active,create_time,created_by,last_update,updated_by
-5,Test Client 1,testclient1@email.com,5551234567,Sample Location 4,1,2020-10-21 22:27:12,sample@email.com,2020-10-21 22:27:12,sample@email.com
-6,Test Client 2,testclient2@email.com,5557654321,Sample Location 5,0,2020-10-21 22:28:10,sample@email.com,2020-10-21 22:28:10,sample@email.com
-7,Test Client 3,testclient3@email.com,5550001111,Sample Location 1,1,2020-10-21 22:39:28,sample@email.com,2020-10-21 22:39:28,sample@email.com
-8,Test Client 4,testclient4@email.com,5551112345,Sample Location 2,1,2020-10-21 22:40:04,sample@email.com,2020-10-21 22:40:04,sample@email.com
-9,Test Client 5,client@testemail1.com,5552345678,Test Location 1,0,2020-10-22 19:49:00,sample@email.com,2020-10-22 19:49:00,sample@email.com
